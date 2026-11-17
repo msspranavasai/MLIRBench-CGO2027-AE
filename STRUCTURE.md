@@ -1,27 +1,16 @@
-# Artifact structure
+# Complete rc6 distribution
 
-The repository keeps runtime and scientific paths stable wherever required by imports, manifests, and reproducibility tools. The optional mutation catalog contains an intentional correction excluding the unused Linalg `L2_R2` entry. Published data and historical observations remain distinct from optional live-agent configuration.
+The canonical file is `MLIRBench-CGO2027-AE-v0.3.0rc6.tar.gz`; its only top-level directory is `MLIRBench-CGO2027-AE-v0.3.0rc6/`.
 
-| Path | Purpose |
+| Path | Contents |
 |---|---|
-| `ae.sh`, `Dockerfile`, `requirements/` | Single-container launcher, image definition and dependency pins |
-| `src/mlirbench/` | Pipeline, checkpoint verification, execution, scoring and reports |
-| `optional/live_pipeline/` | Four-agent implementations and optional live-model adapters |
-| `data/` | Published scientific records, downstream predictions and provenance |
-| `experiments/` | Manuscript expectations, experiment configurations and numerical policy |
-| `paper/reference/` | Accepted manuscript and reference materials |
-| `tests/` | Unit, integration and compiler tests |
-| `tools/` | Runtime and release verification utilities |
-| `docs/` | Detailed workflows, known limitations and release guidance |
-| `release/` | Historical and final checksums, source-file mapping and resource inventory |
-| `release_tools/` | Distribution verification and packaging utilities |
-| `.github/workflows/` | Native-platform and launcher verification; publication behavior depends on the versioned workflow |
-| `docker/` (complete archive only) | Exported multi-platform image and inventory |
-| `assets/nova/` (complete archive only) | Optional adapters, compiler records and datasets |
-| `evidence/` (complete archive only) | Archived scientific and release-validation evidence |
+| `ae.sh`, `Dockerfile`, `requirements/` | Unified launcher and digest-pinned frozen-toolchain build |
+| `src/`, `optional/live_pipeline/`, `tools/`, `tests/`, `experiments/` | Maintained workflow, optional adapters, scientific policies and tests |
+| `data/`, `paper/reference/` | Frozen datasets/history/downstream snapshot and accepted reference |
+| `assets/nova/` | Original 914-entry supplemental inventory including 11 adapters |
+| `evidence/label-review/`, `evidence/native-ci/`, other restored evidence | Historical rc5 observations, not rc6 validation |
+| `evidence/rc6/` | Actual local candidate reports and scoped execution evidence |
+| `docker/` | Actual rc6 multi-platform export, its inventory/checksum, original rc5 Dockerfile |
+| `release/`, `release_tools/` | Release identity, manifests, classified source map and strict verification/packaging |
 
-Generated reviewer outputs are written outside the checkout by default, under `../MLIRBench-AE-runs/`. Build caches, transient logs and unrelated development artifacts are not part of the scientific distribution.
-
-The complete archive excludes `.git/`. Release identity and file integrity are documented in [PROVENANCE.md](PROVENANCE.md) and the manifests under `release/`.
-
-The final source map must classify intentionally modified files accurately rather than treating all paths as byte-for-byte unchanged.
+No `.git`, Python caches, environments, AppleDouble/resource-fork files, transient build data or credentials are packaged. All regular files are covered by `MANIFEST.sha256` except that manifest itself. A SHA-256 sidecar outside the archive covers the archive bytes. Executable bits are retained; tar owners/timestamps are normalized. Reviewer results default to the sibling `MLIRBench-AE-runs/` directory and are never packaged as scientific inputs.

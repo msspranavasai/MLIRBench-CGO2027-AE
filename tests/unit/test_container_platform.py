@@ -187,14 +187,16 @@ if sys.argv[1:2] == ['build']:
                 self.assertEqual(run.returncode,0,run.stderr)
                 pulls=[c for c in calls if c[0]=='pull'];containers=[c for c in calls if c[0]=='run']
                 self.assertEqual(len(pulls),1);self.assertEqual(len(containers),1)
-                self.assertIn('ghcr.io/msspranavasai/mlirbench-ae:0.3.0rc5',pulls[0])
+                self.assertIn('ghcr.io/msspranavasai/mlirbench-ae:0.3.0rc6',pulls[0])
                 self.assertFalse(any(c[0]=='build' for c in calls))
                 self.assertEqual(containers[0][containers[0].index('--network')+1],'none')
 
     def test_pull_or_source_identity_failure_never_starts_container(self):
-        for extra in ({'AE_TEST_PULL_FAIL':'1'},{'AE_TEST_IMAGE_SOURCE_ID':'stale'}):
-            with self.subTest(extra=extra):
-                run,calls=self.launch('aarch64',environment={'AE_IMAGE_SOURCE':'pull',**extra})
+        for source, extra in [('pull', {'AE_TEST_PULL_FAIL':'1'}),
+                              ('pull', {'AE_TEST_IMAGE_SOURCE_ID':'stale'}),
+                              ('local', {'AE_TEST_IMAGE_SOURCE_ID':'stale'})]:
+            with self.subTest(source=source, extra=extra):
+                run,calls=self.launch('aarch64',environment={'AE_IMAGE_SOURCE':source,**extra})
                 self.assertNotEqual(run.returncode,0)
                 self.assertFalse(any(c[0] in ('build','run') for c in calls))
 

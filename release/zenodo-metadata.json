@@ -1,7 +1,7 @@
 {
-  "title": "MLIRBench: CGO 2027 Artifact Evaluation Release (v0.3.0rc5)",
+  "title": "MLIRBench: CGO 2027 Artifact Evaluation Release (v0.3.0rc6)",
   "resource_type": "software",
-  "version": "0.3.0rc5",
+  "version": "0.3.0rc6",
   "creators": [
     {
       "name": "Maganti, Pranava Sai"
@@ -36,6 +36,8 @@
     "Program Analysis",
     "Reproducibility"
   ],
-  "related_software": "https://github.com/msspranavasai/MLIRBench-CGO2027-AE/releases/tag/v0.3.0rc5",
-  "existing_dataset_doi_status": "not confirmed; no DOI invented"
+  "related_software": "https://github.com/msspranavasai/MLIRBench-CGO2027-AE",
+  "publication_status": "LOCAL_PROPOSAL_NOT_PUBLISHED",
+  "previous_software_record": "https://zenodo.org/records/24309675",
+  "dataset_record": "https://zenodo.org/records/24237192"
 }

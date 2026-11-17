@@ -1,0 +1,11 @@
+{
+  "schema": "mlirbench-release-v1",
+  "version": "0.3.0rc6",
+  "image": "ghcr.io/msspranavasai/mlirbench-ae:0.3.0rc6",
+  "image_archive": "docker/mlirbench-ae-v0.3.0rc6-image.tar",
+  "archive": "MLIRBench-CGO2027-AE-v0.3.0rc6.tar.gz",
+  "root_directory": "MLIRBench-CGO2027-AE-v0.3.0rc6",
+  "publication_status": "LOCAL_CANDIDATE_NOT_PUBLISHED",
+  "previous_zenodo": "https://zenodo.org/records/24309675",
+  "requires_publication_approval": true
+}

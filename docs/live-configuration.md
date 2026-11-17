@@ -6,11 +6,11 @@ This local preflight does not authenticate with providers or establish model ava
 
 ## Agent architecture and model identities
 
-The following table distinguishes the **intended agent assignments** from the model calls actually documented in the current optional live runner. The intended assignments must be implemented and tested before they can be described as verified runtime defaults.
+The following table distinguishes the **intended agent assignments** from the model calls actually documented in the current optional live runner. rc6 aligns mutation preflight and actual SDK request defaults; intercepted tests do not establish remote provider access.
 
 | Agent | Intended model | Runtime status and scope |
 |---|---|---|
-| Mutation | OpenAI `gpt-5.5` | Selected through `MLIRBENCH_MUTATION_MODEL`; confirm the installed runtime default and provider availability |
+| Mutation | OpenAI `gpt-5.5` | Selected through `MLIRBENCH_MUTATION_MODEL`; runtime default gpt-5.5; provider availability unverified |
 | Execution | Google `gemini-2.5-flash` | Intended model-assisted execution analysis; the documented fresh CPU execution stage is deterministic and does **not** require Gemini credentials or make a model call |
 | LLM Reasoning | Nine published benchmark models | Chosen using `--model MODEL_KEY`; the nine published model keys are listed below |
 | Judge | OpenAI `gpt-5.4-mini` | Selected through `OPENAI_MODEL`; confirm the installed runtime default and provider availability |

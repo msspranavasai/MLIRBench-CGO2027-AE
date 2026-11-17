@@ -16,3 +16,12 @@ data/downstream/records
 data/checkpoints
 
 evidence
+
+assets
+release
+release_tools
+docker
+MANIFEST.sha256
+**/._*
+**/.AppleDouble
+**/.env*

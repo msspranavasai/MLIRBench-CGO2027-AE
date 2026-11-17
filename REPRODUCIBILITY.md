@@ -2,7 +2,7 @@
 
 Use `./ae.sh quickstart` for the required no-cost reviewer workflow. Alternatively, verify and load the complete archive's Docker image and use the local-mode command in [README.md](README.md). Each invocation starts one container; experiment networking is disabled by default.
 
-Published benchmark data, archived reasoning records, labels, scoring formulas and numerical policies are preserved. The optional mutation catalog excludes unused Linalg `L2_R2`. Intended live-model corrections are separate from archived reproduction and require matching runtime validation.
+Published benchmark data, archived reasoning records, labels, scoring formulas and numerical policies are preserved. The optional mutation catalog excludes unused Linalg `L2_R2`. Optional live changes are separate from archived reproduction; no paid provider availability is established.
 
 | What is checked | Command | Main evidence |
 |---|---|---|

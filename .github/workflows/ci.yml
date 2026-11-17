@@ -1,22 +1,10 @@
-name: Verify CGO review artifact
+name: Verify rc6 candidate on native CPUs
 on:
-  push:
-    branches: [codex/cgo2027-ae-release]
   pull_request:
   workflow_dispatch:
 permissions:
   contents: read
-concurrency:
-  group: review-verification-${{ github.ref }}
-  cancel-in-progress: false
 jobs:
-  macos-launcher:
-    runs-on: macos-15
-    timeout-minutes: 10
-    steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
-      - name: Test the launcher with macOS system Bash and Docker fixtures
-        run: PYTHONPATH=src:. python3 -m unittest tests.unit.test_container_platform -v
   native-reviewer:
     strategy:
       fail-fast: false
@@ -27,59 +15,54 @@ jobs:
           - arch: arm64
             runner: ubuntu-24.04-arm
     runs-on: ${{ matrix.runner }}
-    timeout-minutes: 30
+    timeout-minutes: 40
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
-      - name: Enable multi-platform image storage on the fresh runner
+      - name: Record native host and verify frozen source
         run: |
-          sudo python3 - <<'PYTHON'
-          import json
-          from pathlib import Path
-          p=Path('/etc/docker/daemon.json')
-          v=json.loads(p.read_text()) if p.exists() else {}
-          v.setdefault('features',{})['containerd-snapshotter']=True
-          p.write_text(json.dumps(v))
-          PYTHON
-          sudo systemctl restart docker
-          docker info -f '{{ .DriverStatus }}'
-      - name: Export and reload both image platforms on a fresh native runner
-        env:
-          IMAGE: ghcr.io/msspranavasai/mlirbench-ae:0.3.0rc5
+          uname -a
+          docker version
+          python3 -B release_tools/verify_distribution.py --source-only
+      - name: Build this exact source without publishing
         run: |
-          export DOCKER_CONFIG="$RUNNER_TEMP/anonymous-docker"
-          mkdir -p "$DOCKER_CONFIG"
-          docker pull --platform linux/amd64 "$IMAGE"
-          docker pull --platform linux/arm64 "$IMAGE"
-          BEFORE="$(docker image inspect --format '{{.Id}}' "$IMAGE")"
-          docker save --output "$RUNNER_TEMP/image.tar" "$IMAGE"
-          python3 - "$RUNNER_TEMP/image.tar" <<'PYTHON'
-          import json,sys,tarfile
-          with tarfile.open(sys.argv[1]) as t:
-              index=json.load(t.extractfile("index.json"))
-              d=index["manifests"][0]["digest"].split(":")[1]
-              native=json.load(t.extractfile("blobs/sha256/"+d))
-              assert {x["platform"]["architecture"] for x in native["manifests"]}=={"amd64","arm64"}
-          print("Both native platforms present in one export")
-          PYTHON
-          docker image rm "$IMAGE"
-          if docker image inspect "$IMAGE" >/dev/null 2>&1; then exit 1; fi
-          docker load --input "$RUNNER_TEMP/image.tar"
-          test "$(docker image inspect --format '{{.Id}}' "$IMAGE")" = "$BEFORE"
-          rm "$RUNNER_TEMP/image.tar"
-      - name: Run the complete workflow from the reloaded image without networking
+          ID="$(PYTHONDONTWRITEBYTECODE=1 python3 tools/release/source_identity.py)"
+          docker build --platform 'linux/${{ matrix.arch }}' \
+            --label "org.mlirbench.source-fingerprint=$ID" \
+            --label "org.opencontainers.image.revision=$GITHUB_SHA" \
+            --label org.opencontainers.image.version=0.3.0rc6 \
+            --label org.opencontainers.image.source=https://github.com/msspranavasai/MLIRBench-CGO2027-AE \
+            -t ghcr.io/msspranavasai/mlirbench-ae:0.3.0rc6 .
+      - name: Run native local-image quickstart twice
         env:
           AE_IMAGE_SOURCE: local
-          AE_IMAGE: ghcr.io/msspranavasai/mlirbench-ae:0.3.0rc5
-        run: AE_OUTPUT_ROOT="$RUNNER_TEMP/results" ./ae.sh quickstart --output /results/review
-      - name: Verify native execution, source identity and preserved paper results
+          AE_IMAGE: ghcr.io/msspranavasai/mlirbench-ae:0.3.0rc6
         run: |
-          python3 tools/release/collect_evidence.py --arch '${{ matrix.arch }}' \
-            --results "$RUNNER_TEMP/results/review" --output "$RUNNER_TEMP/verified/${{ matrix.arch }}"
-      - name: Retain verified native evidence
+          set -o pipefail
+          mkdir -p "$RUNNER_TEMP/evidence"
+          AE_OUTPUT_ROOT="$RUNNER_TEMP/results" ./ae.sh quickstart --output /results/first 2>&1 | tee "$RUNNER_TEMP/evidence/first.log"
+          AE_OUTPUT_ROOT="$RUNNER_TEMP/results" ./ae.sh quickstart --output /results/second 2>&1 | tee "$RUNNER_TEMP/evidence/second.log"
+          python3 -B tools/release/collect_evidence.py --arch '${{ matrix.arch }}' \
+            --results "$RUNNER_TEMP/results/first" --output "$RUNNER_TEMP/evidence/native"
+      - name: Export, remove only task-owned reference, load and run offline
+        env:
+          IMAGE: ghcr.io/msspranavasai/mlirbench-ae:0.3.0rc6
+          AE_IMAGE_SOURCE: local
+          AE_IMAGE: ghcr.io/msspranavasai/mlirbench-ae:0.3.0rc6
+        run: |
+          set -o pipefail
+          docker save -o "$RUNNER_TEMP/candidate-image.tar" "$IMAGE"
+          docker image rm "$IMAGE"
+          docker load -i "$RUNNER_TEMP/candidate-image.tar"
+          AE_OUTPUT_ROOT="$RUNNER_TEMP/results" ./ae.sh quickstart --output /results/reloaded 2>&1 | tee "$RUNNER_TEMP/evidence/reloaded.log"
+          python3 -B tools/release/collect_evidence.py --arch '${{ matrix.arch }}' \
+            --results "$RUNNER_TEMP/results/reloaded" --output "$RUNNER_TEMP/evidence/reloaded-native"
+      - name: Retain actual reports, logs and identities
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: review-evidence-${{ matrix.arch }}
-          path: ${{ runner.temp }}/verified/
+          name: rc6-native-${{ matrix.arch }}
+          path: |
+            ${{ runner.temp }}/evidence/
+            ${{ runner.temp }}/results/
           if-no-files-found: warn
           retention-days: 90

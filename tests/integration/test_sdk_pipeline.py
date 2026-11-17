@@ -44,7 +44,7 @@ class SdkPipeline(unittest.TestCase):
         if 'generateContent' in request.url.path:
             return httpx.Response(200,request=request,json={'candidates':[{'content':{'role':'model','parts':[{'text':json.dumps(ANSWER)}]},
                 'finishReason':'STOP','index':0}],'usageMetadata':{'promptTokenCount':1,'candidatesTokenCount':1,'totalTokenCount':2}})
-        content=(self.mutation if body['model']=='gpt-5-mini' else
+        content=(self.mutation if body['model']=='gpt-5.5' else
                  json.dumps({'scores':{'result_accuracy':10,'explanation_rating':4},'evidence':{},'reasoning':'Synthetic judge fixture only'})
                  if body['model']=='gpt-5.4-mini' else json.dumps(ANSWER))
         return completion(request,content)

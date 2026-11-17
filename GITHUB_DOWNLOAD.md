@@ -1,30 +1,7 @@
-# Download the complete artifact from GitHub
+# Canonical rc6 artifact download
 
-The canonical distribution is `MLIRBench-CGO2027-AE-v0.3.0rc5.tar.gz`. It includes one exported Docker image with both native CPU variants, source, datasets, evidence and optional adapters. The archive exceeds GitHub's [2 GiB per-file release limit](https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases). Zenodo receives the single intact archive; GitHub release assets carry three transport parts of those exact bytes. These are not separate environments or independently maintained archives.
+This local candidate is not yet published. Obtain `MLIRBench-CGO2027-AE-v0.3.0rc6.tar.gz` and its `.sha256` sidecar together from the approved release location after publication. Until then, use the delivered local files. Do not treat GitHub's automatic source ZIP as the complete offline artifact: it omits large supplemental resources and the exported image.
 
-From the [v0.3.0rc5 release](https://github.com/msspranavasai/MLIRBench-CGO2027-AE/releases/tag/v0.3.0rc5), download:
+The canonical download is a plain `.tar.gz`, with the root `MLIRBench-CGO2027-AE-v0.3.0rc6/`. Run the exact checksum, extraction, verification and local-image commands in [README.md](README.md). If GitHub's per-file transport limit requires splitting, publish parts plus part hashes and explicit reconstruction instructions only after producing them; no rc6 parts are claimed here. The Zenodo deposit should receive the intact canonical archive and its actual SHA-256 sidecar.
 
-- `MLIRBench-CGO2027-AE-v0.3.0rc5.tar.gz.part01`
-- `MLIRBench-CGO2027-AE-v0.3.0rc5.tar.gz.part02`
-- `MLIRBench-CGO2027-AE-v0.3.0rc5.tar.gz.part03`
-- `MLIRBench-CGO2027-AE-v0.3.0rc5.tar.gz.parts.sha256`
-- `MLIRBench-CGO2027-AE-v0.3.0rc5.tar.gz.sha256`
-
-In a new directory containing those files:
-
-```bash
-# macOS; Linux can use sha256sum -c instead.
-shasum -a 256 -c MLIRBench-CGO2027-AE-v0.3.0rc5.tar.gz.parts.sha256
-cat MLIRBench-CGO2027-AE-v0.3.0rc5.tar.gz.part01 \
-    MLIRBench-CGO2027-AE-v0.3.0rc5.tar.gz.part02 \
-    MLIRBench-CGO2027-AE-v0.3.0rc5.tar.gz.part03 \
-    > MLIRBench-CGO2027-AE-v0.3.0rc5.tar.gz
-shasum -a 256 -c MLIRBench-CGO2027-AE-v0.3.0rc5.tar.gz.sha256
-tar -xzf MLIRBench-CGO2027-AE-v0.3.0rc5.tar.gz
-cd MLIRBench-CGO2027-AE-v0.3.0rc5
-python3 release_tools/verify_distribution.py
-docker load -i docker/mlirbench-ae-v0.3.0rc5-image.tar
-AE_IMAGE_SOURCE=local AE_IMAGE=ghcr.io/msspranavasai/mlirbench-ae:0.3.0rc5 ./ae.sh quickstart
-```
-
-Allow disk space for parts, reconstructed archive, extracted files, loaded image and new reports (at least 20 GB free; more for full experiments). If the canonical archive is obtained directly from Zenodo, skip the part reconstruction and check the outer SHA-256 before extraction. The plain GitHub source ZIP/tarball omits the actual image and large supplemental assets; use the complete distribution for offline archival reproduction.
+The old rc5 upload has a different ZIP/tar/root layout and must not be silently renamed or replaced. This candidate is a separately versioned repair with unchanged scientific reference data.

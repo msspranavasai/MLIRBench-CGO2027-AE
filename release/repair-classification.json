@@ -1,0 +1,187 @@
+{
+  "schema": "mlirbench-rc6-repair-classification-v1",
+  "base_public_commit": "0e928aae24691f20c17d1f47948fb06c3822b601",
+  "protected_scientific_files": 123,
+  "protected_scientific_files_unchanged": true,
+  "changes_from_public_source": [
+    {
+      "path": ".dockerignore",
+      "before_sha256": "bd4cb866bd3d2ab80a684f0dcb68ad5607b9ba3b7552880d20abaf8a15d9540d",
+      "after_sha256": "09cfbff4118526cfb57643e49dc393789aa34962f8657efc0dfa00f431728991",
+      "classification": "release_or_packaging_or_test_expectation"
+    },
+    {
+      "path": ".github/workflows/ci.yml",
+      "before_sha256": "7c4f2a3d92881da572f01c18aa2a97a20dd2a95a97436d4d4fe4c526ab23acff",
+      "after_sha256": "78f46200c1c61173b9faca7c085ff65a05d6b01849b95ccbf06c0ee4017748e3",
+      "classification": "release_or_packaging_or_test_expectation"
+    },
+    {
+      "path": "ARTIFACT.md",
+      "before_sha256": "7e4d60d42d5c9347185c13479d87d80d8d89ed0d9b2e4f511ab4e164a74f0121",
+      "after_sha256": "9aab59d01b5fc92572e399d1a60d6e1287d1f917af654d8fe1c162aae97f2379",
+      "classification": "release_or_packaging_or_test_expectation"
+    },
+    {
+      "path": "CITATION.cff",
+      "before_sha256": "49ee326a94332b1a84d7d83be6d30327f40d0b0a6aa3cbd33a5e5a86fb40802d",
+      "after_sha256": "220f2df7538e0888163af5bee14e1a7b93de57526e68c4bac084dd3adefb9672",
+      "classification": "release_or_packaging_or_test_expectation"
+    },
+    {
+      "path": "Dockerfile",
+      "before_sha256": "8fb945d794e2bade273821b80cfe77a6a29251ef10756962bd6590660e0bbdac",
+      "after_sha256": "36c0de40be4b14d4ebc288a3a878393d6f9b880d206d86a785732f51f6cdffdc",
+      "classification": "release_or_packaging_or_test_expectation"
+    },
+    {
+      "path": "FINAL_VALIDATION_REPORT.md",
+      "before_sha256": "1fa344fb243a8bd5d2c54b7f22ec04adc5a640f53e7ff0f13fc8b7f760fe18e6",
+      "after_sha256": "716b2275dc2b7427ad1a5a0e019de25069265136bb83abde71fee60adfa3c98c",
+      "classification": "release_or_packaging_or_test_expectation"
+    },
+    {
+      "path": "GITHUB_DOWNLOAD.md",
+      "before_sha256": "91465a9ac25109f315d43a2271c5a914479f884ca34a25a88818ae1dcd4cb5d2",
+      "after_sha256": "c6a2404b6351bc7c78ec85dca95aa86ee6808a781fa607e3eb412794de870ec1",
+      "classification": "release_or_packaging_or_test_expectation"
+    },
+    {
+      "path": "PROVENANCE.md",
+      "before_sha256": "4d24d7848d1db8d525eb84efcf8f08a6d5c5e59fcb4e0d8036d6d5198a6aa17d",
+      "after_sha256": "c80763f6fefeb6722efd9f2fcf0cbd2cc44f379131807950fb8b9ee70e9452a8",
+      "classification": "release_or_packaging_or_test_expectation"
+    },
+    {
+      "path": "README.md",
+      "before_sha256": "ba8eac9e7cc16581a5f526c1e8622bbdbf994c57842e288d827eaacf087101f0",
+      "after_sha256": "38c9dcf1ddcd9f4ad5864005d7a15f409c45096216b165e21707330b711a33e5",
+      "classification": "release_or_packaging_or_test_expectation"
+    },
+    {
+      "path": "RELEASE_NOTES.md",
+      "before_sha256": "e6e80318f82bac2bf39d781335319cca3889f630d2dc837f21c706b3d3a4000c",
+      "after_sha256": "acd5a551c1d450e380f1efecef9d5eebcb2331f0d3284ed96ee6b738250f5fd5",
+      "classification": "release_or_packaging_or_test_expectation"
+    },
+    {
+      "path": "REPRODUCIBILITY.md",
+      "before_sha256": "033f5f344772cfabea426418013711723785f59ea74b1b22e6fad2fcd898d7e9",
+      "after_sha256": "7dd9a2e183844f732cfb46e70881621cdc7c9cdc1d3d3bf5a411871e1bfdd2be",
+      "classification": "release_or_packaging_or_test_expectation"
+    },
+    {
+      "path": "STATUS.md",
+      "before_sha256": "2fb60aa90c788b14ea08f887d54ed2df92ac3fd6170d5bf00cae4a37ac0eb89a",
+      "after_sha256": "a7a37797125885ede466dd2e6cf5758a137c09748ee22dbfd6fd04e899a2c880",
+      "classification": "release_or_packaging_or_test_expectation"
+    },
+    {
+      "path": "STRUCTURE.md",
+      "before_sha256": "2f452e40bfb530838595a943b4b8bc9df513555dd436c8757d28c8c3f3b97fce",
+      "after_sha256": "7c18b70e96d0cd680e03c3edbd2c1ceae73c69b8eb35e2b169bce20349728eba",
+      "classification": "release_or_packaging_or_test_expectation"
+    },
+    {
+      "path": "ZENODO.md",
+      "before_sha256": "35c3c9f9f9ded722882dd71ccb0e5978402e0d88b4d715792d10314d17c6c9e5",
+      "after_sha256": "00eab086433882929200a1d5af1b22c4043dc1d7eab3b0981a9c4b05fbe00c2c",
+      "classification": "release_or_packaging_or_test_expectation"
+    },
+    {
+      "path": "ae.sh",
+      "before_sha256": "8bbc9d7abc3ac20a52a928e0503995f3287e006e5fcff5dc48a16334b1333502",
+      "after_sha256": "6be6e29e02e5645f6781964794f272522676eef58fe0002d31442170d212338e",
+      "classification": "release_or_packaging_or_test_expectation"
+    },
+    {
+      "path": "docs/container-publication.md",
+      "before_sha256": "546c1e57b3c146c3dfa62bcc7c4a327e47b06a2a90dd95bde7ab6dcde8a7ebf5",
+      "after_sha256": "436afbd4569db9d4b8df8dd49d4a0e85c87792c329879ad2ffcdf0de4f5da802",
+      "classification": "release_or_packaging_or_test_expectation"
+    },
+    {
+      "path": "docs/live-configuration.md",
+      "before_sha256": "5752bb095ac97fc6f107670d5943fc5d961a0bf050affdaa2db237fe0bad8f0e",
+      "after_sha256": "4342eba0454bb09ae3c339e15296f1d7688ac2842de389e8808777a036761bcd",
+      "classification": "release_or_packaging_or_test_expectation"
+    },
+    {
+      "path": "optional/live_pipeline/agents/mutation_agent/llm.py",
+      "before_sha256": "cc2299aaae9825f579d1093a6b43164e878ceb19208c22ee34e336fa1e69b500",
+      "after_sha256": "08426e214c1b50e2bbb52f8e716219683e82e739506887136839757971a0335f",
+      "classification": "optional_live_configuration"
+    },
+    {
+      "path": "pyproject.toml",
+      "before_sha256": "e79cc8f43c1740b6b0515c83eb7465f3a78d335bc39f53668d63039e000c213f",
+      "after_sha256": "1d7fa06cc1386578537732fda7c5f9f6d4d9db73e607f34bda009fdbce042af2",
+      "classification": "release_or_packaging_or_test_expectation"
+    },
+    {
+      "path": "release/scientific-files.sha256",
+      "before_sha256": "42ab844f2907c47b6cdc481b445c868daeb66c13bbe39de7a575890333ffe497",
+      "after_sha256": "0817ea8b758554aa1106e07e1060a62c3d05f5d19ad514de24664fe1db77402c",
+      "classification": "release_or_packaging_or_test_expectation"
+    },
+    {
+      "path": "release/source-file-map.tsv",
+      "before_sha256": "f68c158c2bc8a4129e4085ef94ed905d48c9fe864a69dede0743e168e445ddfc",
+      "after_sha256": "97c01ea54ab81b3821b3ed1637890cd40e5972f1f144d34a7374e24320853a1c",
+      "classification": "release_or_packaging_or_test_expectation"
+    },
+    {
+      "path": "release/zenodo-metadata.json",
+      "before_sha256": "045230e0eeff816f9e2fd5a5d10e30cce5bdb185635ea61918432e3f8581003d",
+      "after_sha256": "adc063467d14e2eadb336e9fc3c7762f1eede199786bdb8cab9f87207e39a781",
+      "classification": "release_or_packaging_or_test_expectation"
+    },
+    {
+      "path": "release_tools/package_distribution.py",
+      "before_sha256": "48884398837cb57222c2bf17497fedbc97a96ad3d913e30eaa7581bc3fc8632f",
+      "after_sha256": "94c2b5c0e1d78c3e5f90011ea86f71d9d2239d848dc3e7376e73e63350e9922b",
+      "classification": "release_or_packaging_or_test_expectation"
+    },
+    {
+      "path": "release_tools/verify_distribution.py",
+      "before_sha256": "d380dfa74df40b03a1dc8dd03e136616554c5ab47d5b346f54b646c4cd3f54f4",
+      "after_sha256": "c406f11e4e3f409b84e1c8064cf3eda57c8b73360f871779a03290ee5b916e72",
+      "classification": "release_or_packaging_or_test_expectation"
+    },
+    {
+      "path": "src/mlirbench/__init__.py",
+      "before_sha256": "9e5c1a15aec1a58b03f302db398feaaa5155ac2cad50e7c674b89878790d6bd8",
+      "after_sha256": "8d1ca3c954cca2fe5b9fc62686f9497f0e7b46fef0067513eedac8d06018c133",
+      "classification": "release_or_packaging_or_test_expectation"
+    },
+    {
+      "path": "tests/integration/test_sdk_pipeline.py",
+      "before_sha256": "ea57f05721baad701f03df16bcdf1bca4e2059a99e30aa088ba19bd98b0f6494",
+      "after_sha256": "b823856a0dc64611ec95827fbdc32c90ba0132e173181293ace0dc3b0ed5a52b",
+      "classification": "release_or_packaging_or_test_expectation"
+    },
+    {
+      "path": "tests/unit/test_container_platform.py",
+      "before_sha256": "ef1f2c730c0c987d60354097164fe82594c6bcb20d82381ecd02c6af4f79a826",
+      "after_sha256": "526e61a9778b1c824d1c24f266052e6a34ba6bf284fc0d9ff6d9fe5ce7bfebfa",
+      "classification": "release_or_packaging_or_test_expectation"
+    },
+    {
+      "path": "tests/unit/test_live_preflight.py",
+      "before_sha256": "f33066c392888675d305053b2f0419c7845490920f3c5a340b09dd5e3d6e3b90",
+      "after_sha256": "27d9c883f31d3357202056c84ba219b4628511d9330b8f04b5b0f5795a69ebfd",
+      "classification": "release_or_packaging_or_test_expectation"
+    },
+    {
+      "path": "tests/unit/test_package.py",
+      "before_sha256": "f757cfd2263c5b100902e6977dd0bbb30e42bae6c7dc654dd927286c384eb7f9",
+      "after_sha256": "3a2e71f175b726d3b76ff6b07e44bdbd8be3ac9055d622fe2cf58630d3a57ba3",
+      "classification": "release_or_packaging_or_test_expectation"
+    }
+  ],
+  "historical_optional_corrections": {
+    "linalg_catalog_commit": "e77cecd9b2e8f9c8a1edb85c102449722ad072ce",
+    "mutation_preflight_commit": "0e928aae24691f20c17d1f47948fb06c3822b601"
+  },
+  "scope": "No archived scientific record, scoring formula, numerical policy or compiler flag changed."
+}

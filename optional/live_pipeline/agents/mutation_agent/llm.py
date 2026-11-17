@@ -19,7 +19,7 @@ def generate_mutation(prompt: str) -> str:
     system_prompt = getSystemPrompt()
 
     response = client.responses.create(
-        model=model_id("MLIRBENCH_MUTATION_MODEL", "gpt-5-mini"),
+        model=model_id("MLIRBENCH_MUTATION_MODEL", "gpt-5.5"),
         max_output_tokens=limits["max_output_tokens"],
         input=[
             {

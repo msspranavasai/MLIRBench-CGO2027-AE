@@ -2,7 +2,7 @@
 
 ## Default: no paid model calls
 
-Prerequisites: Docker Engine 29 or newer with the containerd image store enabled (including a compatible Docker Desktop installation), Python 3.10 or newer, and sufficient disk space for the compiler image, published data and generated stage artifacts (at least 20 GB recommended for the complete offline distribution). Windows users can use WSL2/Bash. The launcher pulls one versioned multi-platform image containing the compiler/runtime and original optional agent dependencies. Its native platform is selected automatically. Image acquisition needs network access; the archived experiment container runs with networking disabled. The published rc5 image was verified for anonymous pulls before the catalog/model documentation corrections. Its contents must be rebuilt and revalidated before claiming that the corrected release image includes those changes. The complete offline archive includes the actual exported image; see README.md. An explicit source build is available with AE_IMAGE_SOURCE=build.
+Use the complete rc6 archive and the checksum/load/local-mode commands in [README.md](README.md). Docker Engine 29+ with containerd storage, host Python 3.10+ and 20 GB free disk are recommended. The candidate is not published; the default online command below requires later approved publication and actual anonymous validation. Existing scientific scope and numerical policies are unchanged. The root Dockerfile layers the corrected source over the immutable original toolchain.
 
 ```bash
 ./ae.sh quickstart
@@ -52,7 +52,7 @@ The intended optional live-agent assignments for this artifact are:
 
 The nine published reasoning-model keys are `claude-haiku-4-5`, `claude-sonnet-4-5`, `glm-5.1`, `gpt-4.1-mini`, `gpt-oss-120b`, `kimi-k2.6`, `llama-4`, `qwen3-coder-next`, and `gemini-3.1-pro-preview`. The dataset retains their archived responses and scores; no model-generated records are rewritten by configuration changes.
 
-**Implementation verification required:** These are intended live assignments, not proof that the currently distributed Docker image or live code already invokes the named models. The exact provider-supported GPT-5.5 API identifier, Mutation default, Gemini execution-stage integration, and Judge default must be verified in the source code and tested before the revised distribution is released. The default fresh CPU execution commands below are compiler/runtime checks and must not be described as Gemini inference.
+**Optional live scope:** These are intended live assignments, not proof that the currently distributed Docker image or live code already invokes the named models. Mutation preflight and actual SDK requests use the same configured gpt-5.5 default; intercepted SDK tests verify payload configuration only. Provider availability and paid inference are not tested. Gemini execution assistance is not implemented by the CPU workflow. The default fresh CPU execution commands below are compiler/runtime checks and must not be described as Gemini inference.
 
 The Linalg catalog contains 24 rules after removal of the unused `L2_R2` entry, matching the frozen dataset's 24 Linalg and 22 Torch rule IDs. Published data and scoring policies are not modified. See `PROVENANCE.md` for the documented catalog correction and `docs/live-configuration.md` for live-provider configuration.
 
@@ -148,7 +148,7 @@ AE_PLATFORM=linux/arm64 ./ae.sh quickstart
 
 Selecting the opposite architecture uses emulation. The versioned publication workflow requires native ARM64 and AMD64 build-and-test runs, followed by fresh pulls and complete reviewer runs on both architectures. Per-version CI evidence identifies the tested source and image configurations. Both variants retain the same compiler/runtime pins and semantic compiler flags. CPU semantic checks are not performance benchmarks.
 
-The distribution uses one registry reference, `ghcr.io/msspranavasai/mlirbench-ae:0.3.0rc5`. The registry manifest contains exactly the two tested native variants. Reviewers run the same command on both CPU types; they do not select separate agent images or start supporting services. See [container publication](docs/container-publication.md).
+The distribution uses one registry reference, `ghcr.io/msspranavasai/mlirbench-ae:0.3.0rc6`. The intended registry index contains both platform variants; final native validation status is recorded separately, and historical rc5 tests do not establish rc6 success. Reviewers run the same command on both CPU types; they do not select separate agent images or start supporting services. See [container publication](docs/container-publication.md).
 
 ## Additional checks
 
@@ -165,11 +165,11 @@ The historical label audit is an additional scientific diagnostic. It is no long
 
 The sole root Dockerfile packages the four-stage evaluation workflow, both dialect toolchains, the isolated downstream compiler, archived records and optional live SDKs. Packaging a stage does not by itself verify the intended live-model assignments. One published version tag contains native AMD64 and ARM64 variants of that same environment. Docker selects the host-compatible variant; each invocation runs exactly one disposable reviewer container. There is no Compose stack, database or external compiler service.
 
-The default launcher pulls the versioned registry reference and verifies that the selected image’s source fingerprint matches the checkout. After a catalog or live-model configuration change, regenerate the fingerprint and rebuild the image; do not rely on a previously published image whose source differs. Use AE_IMAGE to pin the published index digest when an immutable binary reference is desired. Version publication refuses to replace an existing tag with different platform digests. The default does not require manually loading architecture-specific tar files.
+After approved publication, the default launcher pulls the versioned reference. Both pull and local modes verify that the selected image source fingerprint matches the checkout. After a catalog or live-model configuration change, regenerate the fingerprint and rebuild the image; do not rely on a previously published image whose source differs. Use AE_IMAGE to pin the published index digest when an immutable binary reference is desired. Version publication refuses to replace an existing tag with different platform digests. The default does not require manually loading architecture-specific tar files.
 
-The published rc5 image was public and both native variants passed anonymous pull verification for the previously validated build. These historical checks do not verify the corrected mutation catalog or intended live-model changes; a revised image must be built, tested and published under a new immutable release identity. See [the publication guide](docs/container-publication.md) for the public-download check.
+The restored rc5 CI evidence is historical only. The rc6 image is a separately built local candidate; native AMD64 and public online execution remain NOT TESTED until actually performed. See [the publication guide](docs/container-publication.md) for the public-download check.
 
-The complete distribution includes `docker/mlirbench-ae-v0.3.0rc5-image.tar`. Follow README.md to verify and load it, then select `AE_IMAGE_SOURCE=local` with the documented rc5 tag. Local mode prevents registry access; the inventory identifies included architectures.
+The complete distribution includes `docker/mlirbench-ae-v0.3.0rc6-image.tar`. Follow README.md to verify and load it, then select `AE_IMAGE_SOURCE=local` with the documented rc5 tag. Local mode prevents registry access and now enforces the same source-fingerprint guard; the inventory identifies included architectures.
 
 Quickstart also writes `preservation.json`, comparing newly recalculated archived results and frozen inputs against the pre-hardening baseline. This check fails on changed numbers or records, without changing expected paper values, tolerances, labels or scoring rules. For a completed full quickstart run, repeat it with `./ae.sh verify-preservation --results /results/<run-folder>`. Scientific provenance and fresh experimental outcomes remain separate evidence.
 

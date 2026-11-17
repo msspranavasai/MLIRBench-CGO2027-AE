@@ -109,7 +109,7 @@ class LivePreflight(unittest.TestCase):
                 run_pipeline(root, root/'out', stage='mutation', mode='fresh', allow_paid=True)
             _, manifest = load_run(root/'out')
             config = manifest['live_configuration']
-            self.assertEqual(config['stages']['mutation']['model_id'], 'gpt-5-mini')
+            self.assertEqual(config['stages']['mutation']['model_id'], 'gpt-5.5')
             self.assertEqual(config['stages']['mutation']['agent_attempts'], 3)
             for secret in KEYS.values(): self.assertNotIn(secret, json.dumps(manifest))
 

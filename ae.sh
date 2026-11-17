@@ -36,7 +36,7 @@ if [[ -z "$AE_IMAGE_SOURCE" ]]; then
   esac
 fi
 case "$AE_IMAGE_SOURCE" in
-  pull) AE_DEFAULT_IMAGE=ghcr.io/msspranavasai/mlirbench-ae:0.3.0rc5 ;;
+  pull) AE_DEFAULT_IMAGE=ghcr.io/msspranavasai/mlirbench-ae:0.3.0rc6 ;;
   build|local) AE_DEFAULT_IMAGE=mlirbench-ae:reviewer ;;
   *) echo "AE_IMAGE_SOURCE must be pull, build, or local." >&2; exit 1 ;;
 esac
@@ -101,11 +101,11 @@ if [[ "$AE_ACTUAL_PLATFORM" != "$AE_PLATFORM" ]]; then
   echo "Image platform $AE_ACTUAL_PLATFORM differs from $AE_PLATFORM. Rebuild with AE_IMAGE_SOURCE=build." >&2
   exit 1
 fi
-if [[ "$AE_IMAGE_SOURCE" == pull ]]; then
+if [[ "$AE_IMAGE_SOURCE" == pull || "$AE_IMAGE_SOURCE" == local ]]; then
   AE_SOURCE_ID="$(python3 "$AE_ROOT/tools/release/source_identity.py")"
   AE_IMAGE_SOURCE_ID="$(docker image inspect ${AE_INSPECT_PLATFORM[@]+"${AE_INSPECT_PLATFORM[@]}"} --format '{{index .Config.Labels "org.mlirbench.source-fingerprint"}}' "$AE_IMAGE")"
   if [[ "$AE_IMAGE_SOURCE_ID" != "$AE_SOURCE_ID" ]]; then
-    echo "Downloaded image does not match this checkout. Use the matching release or AE_IMAGE_SOURCE=build." >&2
+    echo "Selected image does not match this checkout. Use the matching release or AE_IMAGE_SOURCE=build." >&2
     exit 1
   fi
 fi
