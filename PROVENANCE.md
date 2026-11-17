@@ -35,7 +35,7 @@ MLIRBench uses four agents to generate, validate, evaluate, and judge compiler-a
 | Mutation Agent | GPT-5.5 | Generates MLIR program mutations using the defined mutation rules and inspection metadata. |
 | Execution Agent | `gemini-2.5-flash` | Supports execution-stage analysis and validation. |
 | LLM Reasoning Agent | Nine evaluated models | Produces compiler-aware reasoning responses for the published benchmark. |
-| Judge Agent | GPT-based judge | Evaluates model-generated reasoning against the benchmark's evaluation criteria. |
+| Judge Agent | GPT-5.4-mini | Evaluates model-generated reasoning against the benchmark's evaluation criteria. |
 
 The nine-model reasoning dataset is preserved as published. Agent model configurations and model-generated reasoning records are separate components of the artifact.
 
