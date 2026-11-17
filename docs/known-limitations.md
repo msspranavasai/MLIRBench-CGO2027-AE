@@ -15,6 +15,6 @@ Published labels and paper results are preserved. New audits do not silently rep
 - Original GPU scripts retain historical absolute paths. They are provenance, not advertised portable commands.
 - The launcher pulls one versioned image for the Docker host's native ARM64 or AMD64 architecture by default; local source building is explicit. Publication requires full native build/test and fresh-pull verification on both CPUs, with evidence retained per version. The Debian apt/build snapshot remains unfrozen. Explicit cross-architecture runs use emulation and are identified in environment evidence. CPU timings across architectures are not directly interchangeable.
 
-- Compiler/RISC-V source and scan records are archived, but fresh backend code generation is a separate unfinished reproduction path.
+- Compiler/RISC-V source, scan records and portable fresh commands are provided. Independent full-corpus evidence is distinct from quickstart arithmetic and example runs; reviewers can regenerate it using ARTIFACT.md. Static RISC-V instruction analysis is not a hardware speedup measurement.
 
 - Input policy valid-domain-v5 adds sign/zero coverage with operation-domain-checked fallback. The adapter no longer promotes a partial successful trial from an unverified suite. Source verification covers the exact original 1,804-row Supabase CSV and all 1,768 extracted published records. Actual historical runtime inputs remain unrecorded. The new audit reports current witnesses and structural conflicts without changing published labels; see docs/execution-provenance.md.

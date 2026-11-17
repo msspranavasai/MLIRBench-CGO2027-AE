@@ -11,6 +11,8 @@ The archive extracts to one directory of the same name without `.tar.gz`. Its `M
 
 Zenodo currently documents a 50,000,000,000-byte total and up to 100 files per record; see [official file limits](https://help.zenodo.org/docs/deposit/manage-files/). Check the final measured size and current quota before uploading. The compressed archive plus checksum must fit that total. Do not split deposits merely to evade quota.
 
+GitHub’s per-file limit is smaller than the complete archive. Its release provides checksum-verified transport parts; [GITHUB_DOWNLOAD.md](GITHUB_DOWNLOAD.md) reassembles the exact canonical archive. Upload the single intact `.tar.gz` to Zenodo, not the transport parts.
+
 ## Metadata
 
 - Title: **MLIRBench: CGO 2027 Artifact Evaluation Release (v0.3.0rc5)**

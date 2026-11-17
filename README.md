@@ -28,7 +28,7 @@ The no-cost route replays mutation → execution → reasoning → judge, recomp
 
 ## Offline archive
 
-The complete Zenodo distribution additionally contains the actual exported image and optional adapter assets. After extraction:
+The [complete distribution](GITHUB_DOWNLOAD.md) (one archive for Zenodo, transport parts on GitHub) additionally contains the actual exported image and optional adapter assets. After extraction:
 
 ```bash
 python3 release_tools/verify_distribution.py

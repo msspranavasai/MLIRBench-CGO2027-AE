@@ -2,7 +2,7 @@
 
 ## Default: no paid model calls
 
-Prerequisites: Docker with Linux containers and Python 3 (standard library only for host-side build-input checks) and disk space for the compiler image, published data and generated stage artifacts. Windows users can use WSL2/Bash. The launcher pulls one versioned multi-platform image containing the compiler/runtime and original optional agent dependencies. Its native platform is selected automatically. Image acquisition needs network access; the archived experiment container runs with networking disabled. A private package requires registry authentication until the author makes it public. An explicit source build is available with AE_IMAGE_SOURCE=build.
+Prerequisites: Docker with Linux containers and Python 3 (standard library only for host-side build-input checks) and disk space for the compiler image, published data and generated stage artifacts. Windows users can use WSL2/Bash. The launcher pulls one versioned multi-platform image containing the compiler/runtime and original optional agent dependencies. Its native platform is selected automatically. Image acquisition needs network access; the archived experiment container runs with networking disabled. The frozen rc5 image is public and supports anonymous pulls. The complete offline archive includes the actual exported image; see README.md. An explicit source build is available with AE_IMAGE_SOURCE=build.
 
 ```bash
 ./ae.sh quickstart
