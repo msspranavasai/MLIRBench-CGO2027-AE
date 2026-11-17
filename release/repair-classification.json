@@ -31,7 +31,7 @@
     {
       "path": "Dockerfile",
       "before_sha256": "8fb945d794e2bade273821b80cfe77a6a29251ef10756962bd6590660e0bbdac",
-      "after_sha256": "36c0de40be4b14d4ebc288a3a878393d6f9b880d206d86a785732f51f6cdffdc",
+      "after_sha256": "2606c287a3c658769915097ca9a32703be4ea1f72c11331766763febfdfa3b13",
       "classification": "release_or_packaging_or_test_expectation"
     },
     {
@@ -49,7 +49,7 @@
     {
       "path": "PROVENANCE.md",
       "before_sha256": "4d24d7848d1db8d525eb84efcf8f08a6d5c5e59fcb4e0d8036d6d5198a6aa17d",
-      "after_sha256": "24cdac191cf04c0cfca3b6926d8338dc5b0aba26b0428bc752332a07686c67ca",
+      "after_sha256": "6f13e6693c10345ab965ea44c3c1dabf2c265d215d1b03475d86f0f721f1174e",
       "classification": "release_or_packaging_or_test_expectation"
     },
     {
@@ -127,13 +127,13 @@
     {
       "path": "release/scientific-files.sha256",
       "before_sha256": "42ab844f2907c47b6cdc481b445c868daeb66c13bbe39de7a575890333ffe497",
-      "after_sha256": "176b42144eed5b79082c2349a81d4edbd524b905b5f103cf5c5b7e54fb0cb294",
+      "after_sha256": "aeba9b70edacbbd5cec7387290ec2db070fc813d20c7a68fe8e4028740a2201c",
       "classification": "release_or_packaging_or_test_expectation"
     },
     {
       "path": "release/source-file-map.tsv",
       "before_sha256": "f68c158c2bc8a4129e4085ef94ed905d48c9fe864a69dede0743e168e445ddfc",
-      "after_sha256": "7909a3cc1dad9dda5ecf379fed390cb73ad4e320341a4a3e50965e9525fcb1d7",
+      "after_sha256": "f3ca75a7b8556683170407cc74a13d4bb91b29d977e614eb4116b62479c6111a",
       "classification": "release_or_packaging_or_test_expectation"
     },
     {
@@ -182,6 +182,12 @@
       "path": "tests/unit/test_package.py",
       "before_sha256": "f757cfd2263c5b100902e6977dd0bbb30e42bae6c7dc654dd927286c384eb7f9",
       "after_sha256": "3a2e71f175b726d3b76ff6b07e44bdbd8be3ac9055d622fe2cf58630d3a57ba3",
+      "classification": "release_or_packaging_or_test_expectation"
+    },
+    {
+      "path": "tools/release/source_identity.py",
+      "before_sha256": "fd71383c6f49fedc07008a9684617e1a9d38c5782a727eb77e7826fa5e9569a7",
+      "after_sha256": "fb25f3c952174ae7c783e63ce13524767c42025ec367517a4975c0422a308247",
       "classification": "release_or_packaging_or_test_expectation"
     }
   ],

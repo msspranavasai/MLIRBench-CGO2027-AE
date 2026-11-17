@@ -13,8 +13,9 @@ COPY tests /app/tests
 COPY experiments /app/experiments
 COPY docs /app/docs
 # Source installation has no dependency resolution and no network access.
-RUN --network=none python -m pip install --no-cache-dir --no-deps --no-build-isolation . && \
-    python -c "import importlib.metadata,mlirbench; assert importlib.metadata.version('mlirbench') == mlirbench.__version__ == '0.3.0rc6'" && \
+RUN --network=none cd /tmp && PYTHONPATH= python -m pip uninstall --yes mlirbench && \
+    PYTHONPATH= python -m pip install --no-cache-dir --no-deps --no-build-isolation /app && \
+    python -I -c "import importlib.metadata as m,mlirbench; assert m.version('mlirbench') == mlirbench.__version__ == '0.3.0rc6'; assert len(list(m.distributions(name='mlirbench'))) == 1" && \
     command -v mlir-opt && command -v torch-mlir-opt && command -v iree-compile && \
     python -c "import iree.compiler,iree.runtime,numpy" && test ! -f /app/.env
 ENTRYPOINT ["python", "-m", "mlirbench"]
