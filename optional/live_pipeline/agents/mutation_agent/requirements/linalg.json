@@ -102,25 +102,6 @@
       ]
     },
     {
-      "id": "L2_R2",
-      "description": "Modify tensor element types using inspection metadata with enforced transformation",
-      "rules": [
-        "Extract all unique element types from inspection metadata",
-        "Select at least one tensor element type and replace it with a different type from the extracted set",
-        "The replacement type must be different from the original type (no no-op allowed)",
-        "Apply the type change consistently across all dependent operations and values",
-        "Propagate the new type through the entire use-def chain",
-        "Update all related constants, operands, and results to match the new type",
-        "Ensure all operations used support the updated type",
-        "Do NOT introduce types not present in inspection metadata",
-        "Do NOT partially update types; all dependent uses must be updated",
-        "Maintain valid MLIR typing and SSA rules",
-        "If no alternative type exists, return explicit mutation failure instead of unchanged program",
-        "Output must be syntactically different from input",
-        "Must compile successfully"
-      ]
-    },
-    {
       "id": "L2_R3",
       "description": "Modify constants based on inspection-provided values",
       "rules": [
