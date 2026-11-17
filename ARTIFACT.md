@@ -1,4 +1,4 @@
-# Reviewer instructions
+# Artifact
 
 ## Default: no paid model calls
 
