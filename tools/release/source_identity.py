@@ -1,6 +1,7 @@
 """Compute the same stdlib-only source identity used in reviewer evidence."""
 from pathlib import Path
 import sys
+sys.dont_write_bytecode = True
 ROOT=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(ROOT/'src'))
 from mlirbench.ae import source_fingerprint
