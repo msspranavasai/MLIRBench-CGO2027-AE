@@ -2,7 +2,7 @@
 
 ## Default: no paid model calls
 
-Prerequisites: Docker with Linux containers and Python 3 (standard library only for host-side build-input checks) and disk space for the compiler image, published data and generated stage artifacts. Windows users can use WSL2/Bash. The launcher pulls one versioned multi-platform image containing the compiler/runtime and original optional agent dependencies. Its native platform is selected automatically. Image acquisition needs network access; the archived experiment container runs with networking disabled. The frozen rc5 image is public and supports anonymous pulls. The complete offline archive includes the actual exported image; see README.md. An explicit source build is available with AE_IMAGE_SOURCE=build.
+Prerequisites: Docker Engine 29 or newer with the containerd image store enabled (including a compatible Docker Desktop installation), Python 3.10 or newer, and sufficient disk space for the compiler image, published data and generated stage artifacts (at least 20 GB recommended for the complete offline distribution). Windows users can use WSL2/Bash. The launcher pulls one versioned multi-platform image containing the compiler/runtime and original optional agent dependencies. Its native platform is selected automatically. Image acquisition needs network access; the archived experiment container runs with networking disabled. The published rc5 image was verified for anonymous pulls before the catalog/model documentation corrections. Its contents must be rebuilt and revalidated before claiming that the corrected release image includes those changes. The complete offline archive includes the actual exported image; see README.md. An explicit source build is available with AE_IMAGE_SOURCE=build.
 
 ```bash
 ./ae.sh quickstart
@@ -39,6 +39,23 @@ Source files, record contents, program pairs and parent stages have SHA-256 iden
 
 The execution agent compiles and executes both programs with positional shared inputs, operation-aware domain checks, five deterministic seeds and two fresh-process repetitions per program/input. Exact typed outputs are compared. EQUIV means observed equality across this suite, not universal equivalence. Unsupported input domains, timeouts and nonfinite outputs remain unscored. Fresh execution is kept separate from the archived observations used for paper metrics.
 
+## Agent model assignments and scientific scope
+
+The intended optional live-agent assignments for this artifact are:
+
+| Agent | Intended model or evaluation set | Role |
+|---|---|---|
+| Mutation | GPT-5.5 | Generates mutations under the selected MLIR rule and inspection metadata |
+| Execution | `gemini-2.5-flash` | Intended model-assisted execution analysis, distinct from the deterministic compiler/runtime validation performed by the no-cost execution stage |
+| LLM Reasoning | Nine published benchmark models | Produces reasoning responses for each published pair |
+| Judge | `gpt-5.4-mini` | Intended GPT-based evaluator for optional live judging |
+
+The nine published reasoning-model keys are `claude-haiku-4-5`, `claude-sonnet-4-5`, `glm-5.1`, `gpt-4.1-mini`, `gpt-oss-120b`, `kimi-k2.6`, `llama-4`, `qwen3-coder-next`, and `gemini-3.1-pro-preview`. The dataset retains their archived responses and scores; no model-generated records are rewritten by configuration changes.
+
+**Implementation verification required:** These are intended live assignments, not proof that the currently distributed Docker image or live code already invokes the named models. The exact provider-supported GPT-5.5 API identifier, Mutation default, Gemini execution-stage integration, and Judge default must be verified in the source code and tested before the revised distribution is released. The default fresh CPU execution commands below are compiler/runtime checks and must not be described as Gemini inference.
+
+The Linalg catalog contains 24 rules after removal of the unused `L2_R2` entry, matching the frozen dataset's 24 Linalg and 22 Torch rule IDs. Published data and scoring policies are not modified. See `PROVENANCE.md` for the documented catalog correction and `docs/live-configuration.md` for live-provider configuration.
+
 ## Optional live-agent code (outside the required reviewer route)
 
 The optional live implementation is provided for users who independently choose and arrange provider access. The submission does not provide or promise API keys, credits or an API access server, and evaluators are not expected to supply them for the required route. Its runtime guards still require explicit --allow-paid-api, a valid configuration and the relevant credentials before any model call; no credentials are distributed with the code. The launcher enables container networking only for this explicit opt-in and forwards named provider environment variables or an explicitly supplied AE_ENV_FILE. Credentials are not copied into the image or saved in run artifacts.
@@ -55,7 +72,7 @@ The optional live implementation is provided for users who independently choose 
 
 The runner validates all requested live models, credentials and request budgets before starting any agent. See [fresh API configuration](docs/live-configuration.md) for exact provider IDs, stage-specific credentials, limits and the limits of local preflight. Each fresh run records the resolved configuration without credential values.
 
-Fresh runs default to one pair and one reasoning model. --all explicitly permits a larger selected experiment. Mutation uses the original gpt-5-mini configuration (MLIRBENCH_MUTATION_MODEL overrides it); judging uses the original judge implementation/configuration (OPENAI_MODEL overrides it). Provider/model availability and a real paid request have not been validated in this no-cost preparation run. Failures remain failures; fresh scores are never filled with archived values. Invalid raw judge JSON, missing component fields, nonnumeric/nonfinite/out-of-range ratings and inconsistent component maxima are rejected before scoring. The raw invalid response and its hash are retained in the failed case observation. No fallback rating or clamped value is substituted. The judge receives the full recorded mutation rule and inspection metadata, or an explicitly identified packaged-catalog rule for an archived pair; unknown or inconsistent rules are refused. These corrections affect optional fresh judging only, not archived ratings or paper aggregation.
+Fresh runs default to one pair and one reasoning model. --all explicitly permits a larger selected experiment. The intended Mutation model is GPT-5.5, selected by `MLIRBENCH_MUTATION_MODEL` using its verified provider API identifier; the intended Judge model is `gpt-5.4-mini`, selected by `OPENAI_MODEL`. Until the code defaults and image are rebuilt and checked, explicitly set these variables for optional live experiments and do not assume the published rc5 image uses them. The intended Gemini 2.5 Flash execution assistant is separate from the CPU compiler/runtime execution checks and must be implemented and verified before being claimed as an active live-agent stage. Provider/model availability and a real paid request have not been validated in this no-cost preparation run. Failures remain failures; fresh scores are never filled with archived values. Invalid raw judge JSON, missing component fields, nonnumeric/nonfinite/out-of-range ratings and inconsistent component maxima are rejected before scoring. The raw invalid response and its hash are retained in the failed case observation. No fallback rating or clamped value is substituted. The judge receives the full recorded mutation rule and inspection metadata, or an explicitly identified packaged-catalog rule for an archived pair; unknown or inconsistent rules are refused. These corrections affect optional fresh judging only, not archived ratings or paper aggregation.
 
 To use a new MLIR source rather than a published pair:
 
@@ -146,11 +163,11 @@ The historical label audit is an additional scientific diagnostic. It is no long
 
 ## One reviewer image and one container
 
-The sole root Dockerfile builds all four agents, both dialect toolchains, the isolated original downstream compiler, archived records and optional live SDKs. One published version tag contains native AMD64 and ARM64 variants of that same environment. Docker selects the host-compatible variant; each invocation runs exactly one disposable reviewer container. There is no Compose stack, database or external compiler service.
+The sole root Dockerfile packages the four-stage evaluation workflow, both dialect toolchains, the isolated downstream compiler, archived records and optional live SDKs. Packaging a stage does not by itself verify the intended live-model assignments. One published version tag contains native AMD64 and ARM64 variants of that same environment. Docker selects the host-compatible variant; each invocation runs exactly one disposable reviewer container. There is no Compose stack, database or external compiler service.
 
-The default launcher pulls the versioned registry reference and verifies that the selected image’s source fingerprint matches the checkout. Use AE_IMAGE to pin the published index digest when an immutable binary reference is desired. Version publication refuses to replace an existing tag with different platform digests. The default does not require manually loading architecture-specific tar files.
+The default launcher pulls the versioned registry reference and verifies that the selected image’s source fingerprint matches the checkout. After a catalog or live-model configuration change, regenerate the fingerprint and rebuild the image; do not rely on a previously published image whose source differs. Use AE_IMAGE to pin the published index digest when an immutable binary reference is desired. Version publication refuses to replace an existing tag with different platform digests. The default does not require manually loading architecture-specific tar files.
 
-The published rc5 image is public and both native variants passed anonymous pull verification. This dedicated repository preserves that image and does not republish it. See [the publication guide](docs/container-publication.md) for the public-download check.
+The published rc5 image was public and both native variants passed anonymous pull verification for the previously validated build. These historical checks do not verify the corrected mutation catalog or intended live-model changes; a revised image must be built, tested and published under a new immutable release identity. See [the publication guide](docs/container-publication.md) for the public-download check.
 
 The complete distribution includes `docker/mlirbench-ae-v0.3.0rc5-image.tar`. Follow README.md to verify and load it, then select `AE_IMAGE_SOURCE=local` with the documented rc5 tag. Local mode prevents registry access; the inventory identifies included architectures.
 
