@@ -1,103 +1,53 @@
 {
-  "image": "ghcr.io/msspranavasai/mlirbench-ae:0.3.0rc5",
-  "source_commit": "1cddc68073dea07b283d29c4f5171f608cabf29c",
-  "source_index_digest": "sha256:9238290317c4e6a0b70cd20781fc30169efa87c6fcbc663debdcccd3275eeec8",
-  "archive_sha256": "ece02c64a3fc675b45912ad09c3b68f7c0b564e37693e9b1632efe139cb31697",
-  "archive_bytes": 1314104320,
+  "archive_sha256": "0ae23ccb8d55410e50b25c4d5f5400b0e10569e43e7b4fb8d9014077350c981d",
+  "archive_bytes": 1316857856,
+  "verified_blob_count": 77,
+  "missing_references": [],
+  "index_digests": [
+    "sha256:5bb30f55837f296d7f7e3ba962c2f09f36371e67bdb4fa6bcbcf97bab5195031"
+  ],
   "platforms": [
     {
       "platform": {
-        "architecture": "amd64",
-        "os": "linux"
+        "os": "linux",
+        "architecture": "arm64"
       },
-      "manifest_digest": "sha256:095ec149a9d550cf450a59b48582ed8a845d15a82fa79f4acf5cd7a1a352011d",
-      "config_digest": "sha256:9daa49011bedcc01749d77a924c78ea5d6d417a01d8175b2908d2d893b52cedc",
+      "manifest_digest": "sha256:3aa6c87a3a5efbfeb4e4ce6d05e24e4cf4251172cf8b90133952c3cad1b007af",
+      "config_digest": "sha256:aa4dbf5d3522565a7e17334f7bea07fdc4972c24851cca19937f95f9dbf9f906",
       "source_labels": {
-        "org.mlirbench.source-fingerprint": "8fee6cdc664378040d97e74f3cad35a59dd0d6b32c63e55b8971bf339b1bf2d1",
-        "org.opencontainers.image.revision": "1cddc68073dea07b283d29c4f5171f608cabf29c",
-        "org.opencontainers.image.source": "https://github.com/msspranavasai/MLIRBench_temp",
-        "org.opencontainers.image.version": "0.3.0rc5"
+        "org.mlirbench.source-fingerprint": "bc9361af9aa9b023a8d0dbb47677588514c191b746cb25486cb10097368781d5",
+        "org.opencontainers.image.revision": "b2e02d85d7be115fed15bf546a11f537cfd57cb5",
+        "org.opencontainers.image.source": "https://github.com/msspranavasai/MLIRBench-CGO2027-AE",
+        "org.opencontainers.image.version": "0.3.0rc6"
       }
     },
     {
       "platform": {
-        "architecture": "arm64",
-        "os": "linux"
+        "os": "linux",
+        "architecture": "amd64"
       },
-      "manifest_digest": "sha256:bbd45a6314d059a1696bce975a93b71dee965199a7dbbb76a100308d8d77ad37",
-      "config_digest": "sha256:e1a12797e68cf80242cdc95216d0c0143d0b8f5507dd2b64bebe120e3ef2c83f",
+      "manifest_digest": "sha256:d12bb9985a0e1278a834e22b8f934838065aa2884907ea0f7b786f4ad6bb62d6",
+      "config_digest": "sha256:d18538fa90440eec227be14b050c0f652295175b7d36a74d71a13603a0891566",
       "source_labels": {
-        "org.mlirbench.source-fingerprint": "8fee6cdc664378040d97e74f3cad35a59dd0d6b32c63e55b8971bf339b1bf2d1",
-        "org.opencontainers.image.revision": "1cddc68073dea07b283d29c4f5171f608cabf29c",
-        "org.opencontainers.image.source": "https://github.com/msspranavasai/MLIRBench_temp",
-        "org.opencontainers.image.version": "0.3.0rc5"
+        "org.mlirbench.source-fingerprint": "bc9361af9aa9b023a8d0dbb47677588514c191b746cb25486cb10097368781d5",
+        "org.opencontainers.image.revision": "b2e02d85d7be115fed15bf546a11f537cfd57cb5",
+        "org.opencontainers.image.source": "https://github.com/msspranavasai/MLIRBench-CGO2027-AE",
+        "org.opencontainers.image.version": "0.3.0rc6"
       }
     }
   ],
-  "verified_blob_count": 66,
-  "export_method": "docker image save --platform linux/amd64,linux/arm64 --output docker/mlirbench-ae-v0.3.0rc5-image.tar ghcr.io/msspranavasai/mlirbench-ae:0.3.0rc5",
-  "runtime_inventory_native_arm64": {
-    "python": "Python 3.11.18",
-    "packages": {
-      "numpy": "2.4.6",
-      "iree-compiler": "20241104.1068",
-      "iree-runtime": "20241104.1068",
-      "torch-mlir": "20261101"
-    },
-    "tools": {
-      "mlir-opt": "Debian LLVM version 19.1.7\n  Optimized build.",
-      "torch-mlir-opt": "LLVM (http://llvm.org/):\n  LLVM version 24.0.0git\n  Optimized build.",
-      "iree-compile": "IREE (https://iree.dev):\n  IREE compiler version 20241104.1068 @ 9c85e30df30d6efcf68a7a1b594e89322bd6085d\n  LLVM version 20.0.0git\n  Optimized build",
-      "/opt/paper-backend/bin/iree-compile": "IREE (https://iree.dev):\n  IREE compiler version 3.12.0rc20260916 @ 2a63818722d3f06d39aa421400f2de5a8d202623\n  LLVM version 24.0.0git\n  Optimized build"
-    },
-    "agents": {
-      "mutation": true,
-      "execution": true,
-      "reasoning": true,
-      "judge": true
-    },
-    "apt": "adduser=3.152\napt=3.0.4\nbase-files=13.8+deb13u7\nbase-passwd=3.6.7\nbash=5.2.37-2+b10\nbsdutils=1:2.41.5-0+deb13u1\nca-certificates=20250419+deb13u1\ncoreutils=9.7-3\ncurl=8.14.1-2+deb13u7\ndash=0.5.12-12\ndebconf=1.5.91\ndebian-archive-keyring=2025.1\ndebianutils=5.23.2\ndiffutils=1:3.10-4\ndpkg=1.22.22\nfindutils=4.10.0-3\ngcc-14-base=14.2.0-19\ngit=1:2.47.3-0+deb13u1\ngit-man=1:2.47.3-0+deb13u1\ngrep=3.11-4+b1\ngzip=1.13-1+deb13u1\nhostname=3.25\ninit-system-helpers=1.69~deb13u1\nlibacl1=2.3.2-2+b1\nlibapt-pkg7.0=3.0.4\nlibattr1=1:2.5.2-3\nlibaudit-common=1:4.0.2-2+deb13u1\nlibaudit1=1:4.0.2-2+deb13u1\nlibblkid1=2.41.5-0+deb13u1\nlibbrotli1=1.1.0-2+deb13u1\nlibbsd0=0.12.2-2\nlibbz2-1.0=1.0.8-6\nlibc-bin=2.41-12+deb13u4\nlibc6=2.41-12+deb13u4\nlibcap-ng0=0.8.5-4+b1\nlibcap2=1:2.75-10+deb13u1+b3\nlibcom-err2=1.47.2-3+b12\nlibcrypt1=1:4.4.38-1\nlibcurl3t64-gnutls=8.14.1-2+deb13u7\nlibcurl4t64=8.14.1-2+deb13u7\nlibdb5.3t64=5.3.28+dfsg2-9\nlibdebconfclient0=0.280\nlibedit2=3.1-20250104-1\nliberror-perl=0.17030-1\nlibexpat1=2.9.0-1~deb13u1\nlibffi8=3.4.8-2\nlibgcc-s1=14.2.0-19\nlibgdbm-compat4t64=1.24-2\nlibgdbm6t64=1.24-2\nlibgmp10=2:6.3.0+dfsg-3\nlibgnutls30t64=3.8.9-3+deb13u4\nlibgomp1=14.2.0-19\nlibgssapi-krb5-2=1.21.3-5+deb13u1\nlibhogweed6t64=3.10.1-1\nlibidn2-0=2.3.8-2\nlibk5crypto3=1.21.3-5+deb13u1\nlibkeyutils1=1.6.3-6\nlibkrb5-3=1.21.3-5+deb13u1\nlibkrb5support0=1.21.3-5+deb13u1\nliblastlog2-2=2.41.5-0+deb13u1\nlibldap2=2.6.10+dfsg-1\nlibllvm19=1:19.1.7-3+b1\nliblz4-1=1.10.0-4\nliblzma5=5.8.1-1+deb13u2\nlibmd0=1.1.0-2+b1\nlibmount1=2.41.5-0+deb13u1\nlibncursesw6=6.5+20250216-2\nlibnettle8t64=3.10.1-1\nlibnghttp2-14=1.64.0-1.1+deb13u1\nlibnghttp3-9=1.8.0-1\nlibngtcp2-16=1.11.0-1+deb13u1\nlibngtcp2-crypto-gnutls8=1.11.0-1+deb13u1\nlibp11-kit0=0.25.5-3\nlibpam-modules=1.7.0-5\nlibpam-modules-bin=1.7.0-5\nlibpam-runtime=1.7.0-5\nlibpam0g=1.7.0-5\nlibpcre2-8-0=10.46-1~deb13u3\nlibperl5.40=5.40.1-6+deb13u1\nlibpfm4=4.13.0+git99-gc5587f9-1\nlibpsl5t64=0.21.2-1.1+b1\nlibreadline8t64=8.2-6\nlibrtmp1=2.4+20151223.gitfa8646d.1-2+b5\nlibsasl2-2=2.1.28+dfsg1-9\nlibsasl2-modules-db=2.1.28+dfsg1-9\nlibseccomp2=2.6.0-2\nlibselinux1=3.8.1-1\nlibsemanage-common=3.8.1-1\nlibsemanage2=3.8.1-1\nlibsepol2=3.8.1-1\nlibsmartcols1=2.41.5-0+deb13u1\nlibsqlite3-0=3.46.1-7+deb13u2\nlibssh2-1t64=1.11.1-1+deb13u2\nlibssl3t64=3.5.7-1~deb13u3\nlibstdc++6=14.2.0-19\nlibsystemd0=257.13-1~deb13u1\nlibtasn1-6=4.20.0-2+deb13u1\nlibtinfo6=6.5+20250216-2\nlibudev1=257.13-1~deb13u1\nlibunistring5=1.3-2\nlibuuid1=2.41.5-0+deb13u1\nlibxml2=2.12.7+dfsg+really2.9.14-2.1+deb13u3\nlibxxhash0=0.8.3-2\nlibz3-4=4.13.3-1\nlibzstd1=1.5.7+dfsg-1\nllvm=1:19.0-63\nllvm-19=1:19.1.7-3+b1\nllvm-19-linker-tools=1:19.1.7-3+b1\nllvm-19-runtime=1:19.1.7-3+b1\nllvm-runtime=1:19.0-63\nlogin=1:4.16.0-2+really2.41.5-0+deb13u1\nlogin.defs=1:4.17.4-2\nmawk=1.3.4.20250131-1\nmlir-19-tools=1:19.1.7-3+b1\nmount=2.41.5-0+deb13u1\nncurses-base=6.5+20250216-2\nncurses-bin=6.5+20250216-2\nnetbase=6.5\nopenssl=3.5.7-1~deb13u3\nopenssl-provider-legacy=3.5.7-1~deb13u3\npasswd=1:4.17.4-2\nperl=5.40.1-6+deb13u1\nperl-base=5.40.1-6+deb13u1\nperl-modules-5.40=5.40.1-6+deb13u1\nreadline-common=8.2-6\nsed=4.9-2+deb13u1\nsqv=1.3.0-3+b2\nsysvinit-utils=3.14-4\ntar=1.35+dfsg-3.1\ntzdata=2026f-0+deb13u1\nutil-linux=2.41.5-0+deb13u1\nzlib1g=1:1.3.dfsg+really1.3.1-1+b1\n",
-    "agent_files": [
-      "optional/live_pipeline/agents/api_config.py",
-      "optional/live_pipeline/agents/__init__.py",
-      "optional/live_pipeline/agents/root_agent/schema.py",
-      "optional/live_pipeline/agents/root_agent/__init__.py",
-      "optional/live_pipeline/agents/root_agent/node.py",
-      "optional/live_pipeline/agents/execution_sandbox_agent/state.py",
-      "optional/live_pipeline/agents/execution_sandbox_agent/__init__.py",
-      "optional/live_pipeline/agents/execution_sandbox_agent/node.py",
-      "optional/live_pipeline/agents/execution_sandbox_agent/run.py",
-      "optional/live_pipeline/agents/execution_sandbox_agent/utils/__init__.py",
-      "optional/live_pipeline/agents/execution_sandbox_agent/prompts/__init__.py",
-      "optional/live_pipeline/agents/execution_sandbox_agent/tools/mlir_embed.py",
-      "optional/live_pipeline/agents/execution_sandbox_agent/tools/benchmark.py",
-      "optional/live_pipeline/agents/execution_sandbox_agent/tools/mlir_utils.py",
-      "optional/live_pipeline/agents/execution_sandbox_agent/tools/execution.py",
-      "optional/live_pipeline/agents/execution_sandbox_agent/tools/__init__.py",
-      "optional/live_pipeline/agents/execution_sandbox_agent/tools/pair_ground_truth.py",
-      "optional/live_pipeline/agents/execution_sandbox_agent/tools/pair_validation.py",
-      "optional/live_pipeline/agents/execution_sandbox_agent/tools/historical_replay.py",
-      "optional/live_pipeline/agents/execution_sandbox_agent/tools/input_policy.py",
-      "optional/live_pipeline/agents/mutation_agent/selector.py",
-      "optional/live_pipeline/agents/mutation_agent/__init__.py",
-      "optional/live_pipeline/agents/mutation_agent/llm.py",
-      "optional/live_pipeline/agents/mutation_agent/node.py",
-      "optional/live_pipeline/agents/mutation_agent/inspector/torch/level1.py",
-      "optional/live_pipeline/agents/mutation_agent/inspector/torch/level4.py",
-      "optional/live_pipeline/agents/mutation_agent/inspector/torch/level3.py",
-      "optional/live_pipeline/agents/mutation_agent/inspector/torch/level5.py",
-      "optional/live_pipeline/agents/mutation_agent/inspector/torch/level2.py",
-      "optional/live_pipeline/agents/mutation_agent/inspector/linalg/level1.py",
-      "optional/live_pipeline/agents/mutation_agent/inspector/linalg/level4.py",
-      "optional/live_pipeline/agents/mutation_agent/inspector/linalg/level3.py",
-      "optional/live_pipeline/agents/mutation_agent/inspector/linalg/level5.py",
-      "optional/live_pipeline/agents/mutation_agent/inspector/linalg/level2.py",
-      "optional/live_pipeline/agents/mutation_agent/prompts/prompt_builder.py",
-      "optional/live_pipeline/agents/mutation_agent/prompts/system_prompt.py",
-      "optional/live_pipeline/agents/llm_reasoning_agent/model_registry.py",
-      "optional/live_pipeline/agents/llm_reasoning_agent/__init__.py",
-      "optional/live_pipeline/agents/llm_reasoning_agent/node.py",
-      "optional/live_pipeline/agents/judge_agent/node.py"
-    ]
-  }
+  "passed": true,
+  "schema": "mlirbench-image-inventory-v1",
+  "image": "ghcr.io/msspranavasai/mlirbench-ae:0.3.0rc6",
+  "source_commit": "b2e02d85d7be115fed15bf546a11f537cfd57cb5",
+  "source_fingerprint": "bc9361af9aa9b023a8d0dbb47677588514c191b746cb25486cb10097368781d5",
+  "source_index_digest": "sha256:5bb30f55837f296d7f7e3ba962c2f09f36371e67bdb4fa6bcbcf97bab5195031",
+  "base_index_digest": "sha256:9238290317c4e6a0b70cd20781fc30169efa87c6fcbc663debdcccd3275eeec8",
+  "publication_status": "LOCAL_CANDIDATE_NOT_PUBLISHED",
+  "native_execution": {
+    "arm64": "PASS: full local quickstart",
+    "amd64": "NOT TESTED: variant built with cross-architecture support on ARM64"
+  },
+  "public_anonymous_quickstart": "NOT TESTED: publication requires approval",
+  "export_method": "docker image save --platform linux/amd64,linux/arm64"
 }

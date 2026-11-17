@@ -44,7 +44,7 @@ def main():
     subprocess.run([sys.executable, '-B', str(root / 'release_tools/verify_distribution.py')], check=True)
     output.parent.mkdir(parents=True, exist_ok=True)
     with output.open('xb') as raw, gzip.GzipFile(filename='', mode='wb', fileobj=raw, mtime=0, compresslevel=6) as gz:
-        with tarfile.open(fileobj=gz, mode='w|', format=tarfile.PAX_FORMAT) as archive:
+        with tarfile.open(fileobj=gz, mode='w|', format=tarfile.PAX_FORMAT, dereference=True) as archive:
             for path in sorted(p for p in root.rglob('*') if p.is_file()):
                 info = archive.gettarinfo(str(path), arcname=root.name + '/' + path.relative_to(root).as_posix())
                 info.uid = info.gid = 0

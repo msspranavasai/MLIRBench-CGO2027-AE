@@ -37,7 +37,7 @@
     {
       "path": "FINAL_VALIDATION_REPORT.md",
       "before_sha256": "1fa344fb243a8bd5d2c54b7f22ec04adc5a640f53e7ff0f13fc8b7f760fe18e6",
-      "after_sha256": "716b2275dc2b7427ad1a5a0e019de25069265136bb83abde71fee60adfa3c98c",
+      "after_sha256": "79cd15586260f408338f0f6a8dff5b6652bac210186c954263c0c3c59a3c67db",
       "classification": "release_or_packaging_or_test_expectation"
     },
     {
@@ -145,7 +145,7 @@
     {
       "path": "release_tools/package_distribution.py",
       "before_sha256": "48884398837cb57222c2bf17497fedbc97a96ad3d913e30eaa7581bc3fc8632f",
-      "after_sha256": "94c2b5c0e1d78c3e5f90011ea86f71d9d2239d848dc3e7376e73e63350e9922b",
+      "after_sha256": "025c3f8bf953deeeb464caeb1dffbe1bd49c01c513de26b37c0bd38b72115779",
       "classification": "release_or_packaging_or_test_expectation"
     },
     {
@@ -195,5 +195,43 @@
     "linalg_catalog_commit": "e77cecd9b2e8f9c8a1edb85c102449722ad072ce",
     "mutation_preflight_commit": "0e928aae24691f20c17d1f47948fb06c3822b601"
   },
-  "scope": "No archived scientific record, scoring formula, numerical policy or compiler flag changed."
+  "scope": "No archived scientific record, scoring formula, numerical policy or compiler flag changed.",
+  "added_release_files": [
+    {
+      "path": "release_tools/test_distribution.py",
+      "sha256": "2538725c7511ff975e9d278875d2952d0f70122dc84810191123ab203927bc12",
+      "classification": "explicit_release_verification_or_historical_reference"
+    },
+    {
+      "path": "docker/Dockerfile.rc5",
+      "sha256": "8fb945d794e2bade273821b80cfe77a6a29251ef10756962bd6590660e0bbdac",
+      "classification": "explicit_release_verification_or_historical_reference"
+    },
+    {
+      "path": "release/release.json",
+      "sha256": "61e4ddd7ee6722528d3ab5d84fb27565484da8f99ce9abab0d3e5908391e1fad",
+      "classification": "explicit_release_verification_or_historical_reference"
+    },
+    {
+      "path": "release/scientific-reference.sha256",
+      "sha256": "3c325f527963160298f8e2e0f11ef625d234f22ecc9d54f3d1c633968645e4c6",
+      "classification": "explicit_release_verification_or_historical_reference"
+    },
+    {
+      "path": "release/rc5-release-invariants.json",
+      "sha256": "cf1aff4d6db2624d1e39ab00c94343022b93e7c46a3d1d4659316698cb395719",
+      "classification": "explicit_release_verification_or_historical_reference"
+    },
+    {
+      "path": "release/baseline-reconciliation.json",
+      "sha256": "a5fedf1ad9c644f5ddc0bae78ba6b7e3f5d22a5001b4f175ed62ee685b344123",
+      "classification": "explicit_release_verification_or_historical_reference"
+    },
+    {
+      "path": "release/rc5-image-inventory.json",
+      "sha256": "863723920e61f9c7f9d197f4e704e7d747906e07c5a5d8476fc7ba7cf2360402",
+      "classification": "explicit_release_verification_or_historical_reference"
+    }
+  ],
+  "generated_metadata_scope": "This classification and the source map do not hash themselves. MANIFEST.sha256 covers all generated metadata and every other regular file except itself."
 }
