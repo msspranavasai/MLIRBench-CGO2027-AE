@@ -38,7 +38,7 @@
     "experiments/level2_dataset_change.json": "cf5a3e24ce18b65ad7374e2dab0171a7e5b97a2d33b3708a79db4a51c3edc0e3",
     "experiments/numeric_agreement.json": "a3ad3d2ab21bf4bf82faf7aebf0639819924fe3b7a6a694b889d915445060c4c",
     "experiments/paper_reference.json": "8332e68c1c08b7cb30a8f81cec660937c9f1185eef097c6eb226b355d5105f2b",
-    "optional/live_pipeline/agents/mutation_agent/requirements/linalg.json": "2cbed71b2f3448cc49a441a8cbcfe3a2da28409a170c659106fa28fe7cd42ef3",
+    "optional/live_pipeline/agents/mutation_agent/requirements/linalg.json": "3af92382d8d73dbcc37f1136989d63b12b71aef6f160c9d0c70d6657a3880066",
     "optional/live_pipeline/agents/mutation_agent/requirements/torch.json": "43563aef35740a53ea6607a4f5b26e795cfe765975c9ae262498afebec8881ee",
     "paper/reference/arxiv-2611.14881v1.pdf": "5d7f6cf8785344209399a98c3fc7c2212e2dde69123a8bc7e6969f28c1c7bb10",
     "paper/reference/arxiv-2611.14881v1.txt": "24eec91e03428eba73c6a9585d4cbbfed2dcb9a73a847e3b30459469fc65c7dc",

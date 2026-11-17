@@ -21,3 +21,7 @@ The original complete local rc5 archive has SHA-256 `ca59d388bdc528983d85bb7dc01
 - Canonical `.tar.gz.sha256`: actual outer archive identity, external to that archive.
 
 Generated experiment outputs remain outside the extracted artifact. No labels, scoring formulas, tolerances, compiler flags, model records, downstream predictions/splits or paper results are changed. Passing software does not establish universal semantic correctness or award an AE badge.
+
+## Preservation baseline reconciliation
+
+The first real rc6 run passed all 214 tests, metrics and fresh CPU cases but correctly failed one of 64 preservation checks: `experiments/release_invariants.json` still pinned the original optional catalog. The original baseline is retained byte-for-byte as `release/rc5-release-invariants.json`. Only the catalog SHA-256 is updated in the active baseline; all scientific data and recomputed-output expectations remain identical. The distribution verifier independently enforces that this is the sole structural difference. No check, tolerance or expectation is removed; 64 checks remain. This is release-validation identity metadata, not a changed numerical or experimental policy. `release/baseline-reconciliation.json` records exact hashes and the zero published occurrences of the removed rule.

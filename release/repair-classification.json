@@ -49,7 +49,7 @@
     {
       "path": "PROVENANCE.md",
       "before_sha256": "4d24d7848d1db8d525eb84efcf8f08a6d5c5e59fcb4e0d8036d6d5198a6aa17d",
-      "after_sha256": "c80763f6fefeb6722efd9f2fcf0cbd2cc44f379131807950fb8b9ee70e9452a8",
+      "after_sha256": "24cdac191cf04c0cfca3b6926d8338dc5b0aba26b0428bc752332a07686c67ca",
       "classification": "release_or_packaging_or_test_expectation"
     },
     {
@@ -107,6 +107,12 @@
       "classification": "release_or_packaging_or_test_expectation"
     },
     {
+      "path": "experiments/release_invariants.json",
+      "before_sha256": "cf1aff4d6db2624d1e39ab00c94343022b93e7c46a3d1d4659316698cb395719",
+      "after_sha256": "c8c4fc8a6a37feb4ad436cafb9a4a49ba9a8362af40e4a5a890a358f7a7877a2",
+      "classification": "release_or_packaging_or_test_expectation"
+    },
+    {
       "path": "optional/live_pipeline/agents/mutation_agent/llm.py",
       "before_sha256": "cc2299aaae9825f579d1093a6b43164e878ceb19208c22ee34e336fa1e69b500",
       "after_sha256": "08426e214c1b50e2bbb52f8e716219683e82e739506887136839757971a0335f",
@@ -121,13 +127,13 @@
     {
       "path": "release/scientific-files.sha256",
       "before_sha256": "42ab844f2907c47b6cdc481b445c868daeb66c13bbe39de7a575890333ffe497",
-      "after_sha256": "0817ea8b758554aa1106e07e1060a62c3d05f5d19ad514de24664fe1db77402c",
+      "after_sha256": "176b42144eed5b79082c2349a81d4edbd524b905b5f103cf5c5b7e54fb0cb294",
       "classification": "release_or_packaging_or_test_expectation"
     },
     {
       "path": "release/source-file-map.tsv",
       "before_sha256": "f68c158c2bc8a4129e4085ef94ed905d48c9fe864a69dede0743e168e445ddfc",
-      "after_sha256": "97c01ea54ab81b3821b3ed1637890cd40e5972f1f144d34a7374e24320853a1c",
+      "after_sha256": "7909a3cc1dad9dda5ecf379fed390cb73ad4e320341a4a3e50965e9525fcb1d7",
       "classification": "release_or_packaging_or_test_expectation"
     },
     {
@@ -145,7 +151,7 @@
     {
       "path": "release_tools/verify_distribution.py",
       "before_sha256": "d380dfa74df40b03a1dc8dd03e136616554c5ab47d5b346f54b646c4cd3f54f4",
-      "after_sha256": "c406f11e4e3f409b84e1c8064cf3eda57c8b73360f871779a03290ee5b916e72",
+      "after_sha256": "d3d6072f585a0f1b7b08af812256cd3f9c6eb2476f6bdaa649396f50cef38ca4",
       "classification": "release_or_packaging_or_test_expectation"
     },
     {

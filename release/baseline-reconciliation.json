@@ -1,0 +1,7 @@
+{
+  "preservation_entry": "optional/live_pipeline/agents/mutation_agent/requirements/linalg.json",
+  "old_sha256": "2cbed71b2f3448cc49a441a8cbcfe3a2da28409a170c659106fa28fe7cd42ef3",
+  "new_sha256": "3af92382d8d73dbcc37f1136989d63b12b71aef6f160c9d0c70d6657a3880066",
+  "published_provenance_occurrences": 0,
+  "reason": "Identity update for the separately authorized removal of an unused optional catalog rule; original baseline retained verbatim, all other expectations unchanged."
+}

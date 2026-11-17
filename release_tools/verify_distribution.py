@@ -111,6 +111,13 @@ def main():
     args = parser.parse_args()
     verify(ROOT / 'release/scientific-files.sha256')
     verify(ROOT / 'release/scientific-reference.sha256')
+    historical = json.loads((ROOT / 'release/rc5-release-invariants.json').read_text())
+    current = json.loads((ROOT / 'experiments/release_invariants.json').read_text())
+    catalog = 'optional/live_pipeline/agents/mutation_agent/requirements/linalg.json'
+    historical['frozen_inputs'][catalog] = digest(ROOT / catalog)
+    if current != historical:
+        raise ValueError('Preservation baseline differs beyond the authorized catalog identity')
+    print('Preservation baseline: PASS (only authorized optional catalog hash differs; all 64 expectations retained)')
     if args.source_only:
         print('Source-only verification: PASS; complete distribution not assessed.')
         return
