@@ -1,15 +1,43 @@
-# Code release scope
+# Artifact release scope
 
-The required reviewer route is `./ae.sh quickstart`, with archived observations, independently recalculated scores and paper tables, saved-prediction metric replay, archived compiler arithmetic, and real repeated CPU execution. No API credentials, provider credits, Nova login or paid judging is required. Each stage can also be replayed independently; fresh model stages remain explicit optional experiments with their own observations and may differ from historical results.
+## Required reviewer route
 
-The author reports that the dataset is already published on Zenodo. This code release does not create, replace or republish that deposit. The pinned scientific files and their existing hashes remain unchanged. The dataset release DOI should be linked in the public repository description when supplied; the code currently identifies its exact frozen Hugging Face revision and the accepted arXiv manuscript.
+The required reviewer workflow is:
 
-The author excluded the reviewer-requested judge-reliability ablation from required reproduction on 2026-11-16. Its frozen study was not recovered or reproduced. The archived arXiv v1 manuscript still contains Appendix E.14/Table 24; preserving that reference does not claim the ablation was independently validated. Readiness reports this as EXCLUDED_FROM_REQUIRED_SCOPE, not PASS.
+```bash
+./ae.sh quickstart
+```
 
-The following remain separate scientific/build checks: original execution input/toolchain provenance and label conflicts; fresh checkpoint inference; full compiler/backend regeneration on additional environments; and a frozen apt/build snapshot. Native CPU software verification is required separately for each image version by the publication workflow. A passing software workflow or local release candidate does not certify all historical semantic labels or award an AE badge. These limitations are not hidden by the ablation scope decision.
+It replays archived mutation, execution, reasoning and judge observations; independently recalculates scores and paper tables; replays saved downstream prediction metrics; checks archived compiler arithmetic; and performs fresh repeated CPU execution demonstrations.
 
-The complete archive includes the copied reviewer assets under `assets/nova/`; large optional assets are not Git blobs. The manifest verifies all 914 copied files, including the 11 final adapter directories, compiler records, pilot assembly and additional datasets. These files were copied from Nova, so reviewers can receive the assets directly. Adapter weights are not the Qwen base-model weights. The original GPU experiment scripts are preserved in the scientific snapshot and still require their documented dependencies/resources; this code release does not claim a completed portable GPU inference run.
+No model API credentials, paid provider credits, or GPU are required. Individual stages can also be replayed separately. Fresh model inference is optional and produces new observations that may differ from the published benchmark.
 
-Release verification and the distinction between original build evidence and this archive’s save/load tests are recorded in FINAL_VALIDATION_REPORT.md. Generated reviewer runs remain outside this source repository; frozen evidence needed for verification is included in the complete distribution.
+## Published dataset and intentional corrections
 
-Python runtime dependencies are constrained to the exact verified versions in requirements/runtime-lock.txt; the package build uses a fixed setuptools version. The image’s base is digest-pinned. Debian apt repository resolution remains distinct from the frozen exported image; retain its installed inventory when distributing an image. Image publication requires the offline workflow on native AMD64 and ARM64, matches the tested and pushed image configurations, assembles one versioned manifest, and then repeats verification after registry pulls. Per-version CI artifacts contain the actual evidence. The original image package is public; this dedicated repository is released publicly after its preparation and release verification.
+The published dataset contains 1,768 MLIR program pairs, 15,912 reasoning records and nine evaluated reasoning models. The published mutation-rule count is 24 Linalg plus 22 Torch.
+
+Published pairs, reasoning records, labels, scoring formulas and numerical policies are preserved. The optional Linalg mutation catalog excludes the unused `L2_R2` entry. Historical label-provenance documentation mentioning an excluded `L2_R2` program remains part of the evidence.
+
+The intended optional live-agent models are GPT-5.5 for Mutation, `gemini-2.5-flash` for Execution, nine published reasoning models, and `gpt-5.4-mini` for Judge. These are configuration targets until confirmed against the final runtime and request payloads. Archived results are not retroactively regenerated.
+
+The dataset has a separately published archival identity. This software release does not replace or silently relabel the dataset deposit. Link the verified dataset DOI when available; do not invent one.
+
+## Excluded or unresolved reproduction
+
+The author excluded the reviewer-requested judge-reliability ablation from required reproduction on November 16, 2026. The archived manuscript still includes Appendix E.14/Table 24, but that does not establish independent reproduction. Report the ablation as `EXCLUDED_FROM_REQUIRED_SCOPE`, not PASS.
+
+Other limitations include historical execution input/toolchain provenance and label conflicts, portable fresh GPU checkpoint inference, full compiler/backend regeneration on additional environments, and permanently frozen future apt dependency resolution.
+
+A passing software workflow does not validate every historical semantic label or award an AE badge.
+
+## Optional assets and dependencies
+
+The complete distribution includes optional reviewer assets under `assets/nova/`, including the previously inventoried 914 files and 11 final adapter directories, subject to verification against the actual final archive. The adapters are not Qwen base-model weights. Portable GPU inference remains an optional, separately validated workflow.
+
+Python runtime dependencies are pinned in `requirements/runtime-lock.txt`, and the base image is digest-pinned. An exported image freezes its installed environment; future apt resolution for a new build is a different guarantee.
+
+## Final-release integrity
+
+Scientific-file checksums, source mappings, the Docker image inventory and the archive manifest must describe the actual final files. Intentional catalog or live-configuration modifications must be classified accurately. Historical validation reports must not be presented as new PASS results.
+
+Each final image version requires native AMD64/ARM64 verification, matching source fingerprint and image labels, an exported image round-trip, and a complete archive checksum check. See [FINAL_VALIDATION_REPORT.md](../FINAL_VALIDATION_REPORT.md), [PROVENANCE.md](../PROVENANCE.md), and [STATUS.md](../STATUS.md).
