@@ -1,23 +1,27 @@
 # Artifact structure
 
-Scientific paths are preserved to protect imports, manifests and runtime behavior. No empty organizational directories are created.
+The repository keeps runtime and scientific paths stable wherever required by imports, manifests, and reproducibility tools. The optional mutation catalog contains an intentional correction excluding the unused Linalg `L2_R2` entry. Published data and historical observations remain distinct from optional live-agent configuration.
 
 | Path | Purpose |
 |---|---|
-| `ae.sh`, `Dockerfile`, `requirements/` | One-container launcher, unified image and pinned dependencies |
-| `src/mlirbench/` | Pipeline, checkpoint verification, execution, scoring and report implementation |
-| `optional/live_pipeline/` | Original agents and optional live-model implementation |
-| `data/` | Frozen compressed published records, downstream predictions and provenance |
-| `experiments/` | Manuscript expectations, configurations, numerical policy and invariants |
-| `paper/reference/` | Accepted manuscript and source identification |
-| `tests/` | Existing unit/integration and compiler tests |
-| `tools/` | Preserved runtime/release verification tools |
-| `docs/` | Scientific limitations and detailed workflow references |
-| `release/` | Original file inventory, source mapping and resource provenance |
-| `release_tools/` | Non-scientific distribution verification/packaging |
-| `.github/workflows/` | Native anonymous-pull and macOS launcher verification; no image publication |
-| `docker/` (complete archive only) | One exported image and its inventory |
-| `assets/nova/` (complete archive only) | Copied optional adapters, compiler records and datasets; no Nova login needed |
-| `evidence/` (complete archive only) | Frozen diagnostic and native CI verification evidence |
+| `ae.sh`, `Dockerfile`, `requirements/` | Single-container launcher, image definition and dependency pins |
+| `src/mlirbench/` | Pipeline, checkpoint verification, execution, scoring and reports |
+| `optional/live_pipeline/` | Four-agent implementations and optional live-model adapters |
+| `data/` | Published scientific records, downstream predictions and provenance |
+| `experiments/` | Manuscript expectations, experiment configurations and numerical policy |
+| `paper/reference/` | Accepted manuscript and reference materials |
+| `tests/` | Unit, integration and compiler tests |
+| `tools/` | Runtime and release verification utilities |
+| `docs/` | Detailed workflows, known limitations and release guidance |
+| `release/` | Historical and final checksums, source-file mapping and resource inventory |
+| `release_tools/` | Distribution verification and packaging utilities |
+| `.github/workflows/` | Native-platform and launcher verification; publication behavior depends on the versioned workflow |
+| `docker/` (complete archive only) | Exported multi-platform image and inventory |
+| `assets/nova/` (complete archive only) | Optional adapters, compiler records and datasets |
+| `evidence/` (complete archive only) | Archived scientific and release-validation evidence |
 
-Generated reviewer outputs remain outside the checkout by default in `../MLIRBench-AE-runs/`. Historical scientific observations within frozen inputs remain intact; transient caches and development logs are not distributed. The complete archive excludes `.git/`; source history is available through the original repository referenced in PROVENANCE.md.
+Generated reviewer outputs are written outside the checkout by default, under `../MLIRBench-AE-runs/`. Build caches, transient logs and unrelated development artifacts are not part of the scientific distribution.
+
+The complete archive excludes `.git/`. Release identity and file integrity are documented in [PROVENANCE.md](PROVENANCE.md) and the manifests under `release/`.
+
+The final source map must classify intentionally modified files accurately rather than treating all paths as byte-for-byte unchanged.
