@@ -27,7 +27,7 @@ def preflight(root, stages, models=None):
     specs = [get_spec(name) for name in (models or [])]
     config = {}
     if 'mutation' in stages:
-        config['mutation'] = {'model_id': model_id('MLIRBENCH_MUTATION_MODEL', 'gpt-5-mini'),
+        config['mutation'] = {'model_id': model_id('MLIRBENCH_MUTATION_MODEL', 'gpt-5.5'),
                               'provider': 'OpenAI', 'api_key_env': 'OPENAI_API_KEY',
                               **request_limits('mutation', 8192)}
     if 'reasoning' in stages:
@@ -72,7 +72,7 @@ def mutate(root, pair):
             'seed':pair.get('seed',0),'requirement_id':result['requirement']['id'],
             'requirement_description':result['requirement']['description'],
             'mutation_observation':result,
-            'model_id':os.environ.get('MLIRBENCH_MUTATION_MODEL','gpt-5-mini')}
+            'model_id':os.environ.get('MLIRBENCH_MUTATION_MODEL','gpt-5.5')}
 
 
 def reason(root, pair, execution, model):
