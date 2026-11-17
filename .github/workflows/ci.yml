@@ -1,0 +1,63 @@
+name: Verify CGO review artifact
+on:
+  push:
+    branches: [codex/cgo2027-ae-release]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: review-verification-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  macos-launcher:
+    runs-on: macos-15
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - name: Test the launcher with macOS system Bash and Docker fixtures
+        run: PYTHONPATH=src:. python3 -m unittest tests.unit.test_container_platform -v
+  native-reviewer:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch: amd64
+            runner: ubuntu-24.04
+          - arch: arm64
+            runner: ubuntu-24.04-arm
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - name: Export and reload the frozen image on a fresh native runner
+        env:
+          IMAGE: ghcr.io/msspranavasai/mlirbench-ae:0.3.0rc5
+        run: |
+          export DOCKER_CONFIG="$RUNNER_TEMP/anonymous-docker"
+          mkdir -p "$DOCKER_CONFIG"
+          docker pull --platform linux/${{ matrix.arch }} "$IMAGE"
+          BEFORE="$(docker image inspect --format '{{.Id}}' "$IMAGE")"
+          docker save --output "$RUNNER_TEMP/image.tar" "$IMAGE"
+          docker image rm "$IMAGE"
+          if docker image inspect "$IMAGE" >/dev/null 2>&1; then exit 1; fi
+          docker load --input "$RUNNER_TEMP/image.tar"
+          test "$(docker image inspect --format '{{.Id}}' "$IMAGE")" = "$BEFORE"
+          rm "$RUNNER_TEMP/image.tar"
+      - name: Run the complete workflow from the reloaded image without networking
+        env:
+          AE_IMAGE_SOURCE: local
+          AE_IMAGE: ghcr.io/msspranavasai/mlirbench-ae:0.3.0rc5
+        run: AE_OUTPUT_ROOT="$RUNNER_TEMP/results" ./ae.sh quickstart --output /results/review
+      - name: Verify native execution, source identity and preserved paper results
+        run: |
+          python3 tools/release/collect_evidence.py --arch '${{ matrix.arch }}' \
+            --results "$RUNNER_TEMP/results/review" --output "$RUNNER_TEMP/verified/${{ matrix.arch }}"
+      - name: Retain verified native evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: review-evidence-${{ matrix.arch }}
+          path: ${{ runner.temp }}/verified/
+          if-no-files-found: warn
+          retention-days: 90

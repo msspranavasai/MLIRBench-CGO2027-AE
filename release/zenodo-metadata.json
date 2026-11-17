@@ -1,0 +1,41 @@
+{
+  "title": "MLIRBench: CGO 2027 Artifact Evaluation Release (v0.3.0rc5)",
+  "resource_type": "software",
+  "version": "0.3.0rc5",
+  "creators": [
+    {
+      "name": "Maganti, Pranava Sai"
+    },
+    {
+      "name": "Peddireddy, Meghasyam"
+    },
+    {
+      "name": "Hossain, Muzakker"
+    },
+    {
+      "name": "Gao, Kaining"
+    },
+    {
+      "name": "Ahmed, Farhan"
+    },
+    {
+      "name": "Jannesari, Ali"
+    }
+  ],
+  "license": "Apache-2.0",
+  "dataset_license": "CC-BY-4.0",
+  "paper": "https://arxiv.org/abs/2611.14881",
+  "conference": "2027 IEEE/ACM International Symposium on Code Generation and Optimization (CGO 2027)",
+  "keywords": [
+    "MLIR",
+    "Compiler Optimization",
+    "Large Language Models",
+    "Semantic Reasoning",
+    "Artifact Evaluation",
+    "Compiler Benchmarks",
+    "Program Analysis",
+    "Reproducibility"
+  ],
+  "related_software": "https://github.com/msspranavasai/MLIRBench-CGO2027-AE/releases/tag/v0.3.0rc5",
+  "existing_dataset_doi_status": "not confirmed; no DOI invented"
+}
