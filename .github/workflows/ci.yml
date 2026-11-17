@@ -30,15 +30,37 @@ jobs:
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
-      - name: Export and reload the frozen image on a fresh native runner
+      - name: Enable multi-platform image storage on the fresh runner
+        run: |
+          sudo python3 - <<'PYTHON'
+          import json
+          from pathlib import Path
+          p=Path('/etc/docker/daemon.json')
+          v=json.loads(p.read_text()) if p.exists() else {}
+          v.setdefault('features',{})['containerd-snapshotter']=True
+          p.write_text(json.dumps(v))
+          PYTHON
+          sudo systemctl restart docker
+          docker info -f '{{ .DriverStatus }}'
+      - name: Export and reload both image platforms on a fresh native runner
         env:
           IMAGE: ghcr.io/msspranavasai/mlirbench-ae:0.3.0rc5
         run: |
           export DOCKER_CONFIG="$RUNNER_TEMP/anonymous-docker"
           mkdir -p "$DOCKER_CONFIG"
-          docker pull --platform linux/${{ matrix.arch }} "$IMAGE"
+          docker pull --platform linux/amd64 "$IMAGE"
+          docker pull --platform linux/arm64 "$IMAGE"
           BEFORE="$(docker image inspect --format '{{.Id}}' "$IMAGE")"
           docker save --output "$RUNNER_TEMP/image.tar" "$IMAGE"
+          python3 - "$RUNNER_TEMP/image.tar" <<'PYTHON'
+          import json,sys,tarfile
+          with tarfile.open(sys.argv[1]) as t:
+              index=json.load(t.extractfile("index.json"))
+              d=index["manifests"][0]["digest"].split(":")[1]
+              native=json.load(t.extractfile("blobs/sha256/"+d))
+              assert {x["platform"]["architecture"] for x in native["manifests"]}=={"amd64","arm64"}
+          print("Both native platforms present in one export")
+          PYTHON
           docker image rm "$IMAGE"
           if docker image inspect "$IMAGE" >/dev/null 2>&1; then exit 1; fi
           docker load --input "$RUNNER_TEMP/image.tar"

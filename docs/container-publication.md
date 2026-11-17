@@ -46,3 +46,17 @@ References:
 - https://docs.docker.com/build/building/multi-platform/
 - https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry
 - https://docs.github.com/en/packages/learn-github-packages/configuring-a-packages-access-control-and-visibility
+
+## Offline image-store compatibility
+
+The one exported archive contains an OCI index with both native CPU variants. Use Docker 29+ with the containerd image store for this offline multi-platform delivery. Current Docker Desktop and fresh Docker Engine 29+ installs enable it by default. Older upgraded Engine installations can retain the classic store, which cannot load a multi-platform index.
+
+Check the store before loading:
+
+```bash
+docker info -f '{{ .DriverStatus }}'
+```
+
+The output should identify `io.containerd.snapshotter.v1`. On Docker Desktop, enable **Use containerd for pulling and storing images** in Settings → General if needed. For Docker Engine, follow the [official containerd-store instructions](https://docs.docker.com/engine/storage/containerd/); preserve existing daemon configuration when merging `features.containerd-snapshotter: true`. A store switch temporarily hides the other store's images/containers until switched back; do not overwrite unrelated daemon settings. The launcher does not change the user's daemon.
+
+Then run the README's `docker load` and local-image quickstart commands. Docker chooses the host-compatible variant. The classic store may still run the normal registry-pull route because the registry supplies one selected platform; that is distinct from loading this dual-platform archive. No second image or supporting container is required.
