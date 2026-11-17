@@ -1,47 +1,55 @@
 # One image, one reviewer container
 
-Frozen public image reference for this release:
+MLIRBench uses a single versioned multi-platform Docker image, with native `linux/amd64` and `linux/arm64` variants. The root `Dockerfile` packages the four-agent code, compiler toolchains, archived observations and metric utilities. Each evaluator command runs one disposable container, without a database, Compose stack or per-agent images.
 
-```text
-ghcr.io/msspranavasai/mlirbench-ae:0.3.0rc5
-```
-
-The single root Dockerfile packages the four agents, local validation tools, both IREE toolchains, archived observations and metric computation. The registry index has two native variants of that same environment: linux/amd64 and linux/arm64. Docker chooses the CPU-compatible variant; the reviewer runs one container per invocation. There is no supporting database, remote compiler server, Compose stack or per-agent image.
-
-## Reviewer command
-
-From the matching source checkout:
+## Reviewer workflow
 
 ```bash
 ./ae.sh quickstart
 ```
 
-The launcher downloads the versioned image for the Docker daemon's CPU and checks its source-fingerprint label against this checkout. The experiment container runs with networking disabled unless the user explicitly requests an optional paid API experiment. No provider API credentials, credits or Nova access are needed for the default archived route. Image downloading is separate from experiment networking.
+The default route replays archived agent observations, recomputes scores and performs CPU compiler checks. It does not require paid API credentials, GPU hardware, Nova access or an external compiler service. The experiment container uses networking disabled by default. Pulling an image is separate from experiment networking.
 
-The existing rc5 image is public. Reviewers can pull without registry credentials. This dedicated repository’s CI only verifies the frozen image; it does not publish a replacement.
+The previously published image reference is:
 
-Use `AE_IMAGE_SOURCE=build ./ae.sh quickstart` to build the same Dockerfile locally. Use `AE_IMAGE_SOURCE=local AE_IMAGE=mlirbench-ae:reviewer ./ae.sh quickstart` for an already loaded local image without registry access. An explicit AE_PLATFORM selects a platform; choosing another CPU architecture requires emulation and is identified in the output. AE_IMAGE may be set to the published index digest for a binary-immutable reference.
+```text
+ghcr.io/msspranavasai/mlirbench-ae:0.3.0rc5
+```
 
-## Publication verification
+**Release identity matters:** a source checkout with modified mutation catalogs or runtime model configuration must not be described as validated by an older image. The launcher checks the image's source-fingerprint label. If that fingerprint differs, build and validate a matching image or publish a new immutable version. Do not silently replace an existing immutable tag.
 
-The original source repository’s versioned publication workflow:
+## Image acquisition
 
-1. Builds AMD64 and ARM64 on native GitHub-hosted runners.
-2. Runs the full offline workflow, tests, numerical agreement and preservation checks on each.
-3. Checks private-repository visibility before pushing any source-bearing layers.
-4. Pushes each tested platform by digest, with no public architecture-specific tags. The pushed configuration must match the tested one.
-5. Assembles exactly those two manifests under one version tag. A conflicting existing version tag is not overwritten.
-6. Pulls that one tag on new native AMD64 and ARM64 runners and repeats the complete reviewer workflow.
+```bash
+# Default: pull the versioned image for the Docker host CPU.
+./ae.sh quickstart
 
-The OCI source/revision/version labels and per-platform CI evidence identify the build. The workflow publishes an index digest in the `published-image` artifact. A successful container publication validates this packaged software workflow; it does not resolve the separately disclosed historical label, GPU or incomplete RISC-V scientific checks.
+# Explicit local build using the current checkout.
+AE_IMAGE_SOURCE=build ./ae.sh quickstart
 
-## Public download verification
+# Use an already loaded matching image without pulling.
+AE_IMAGE_SOURCE=local AE_IMAGE=mlirbench-ae:reviewer ./ae.sh quickstart
+```
 
-The GHCR package is public independently of this repository's preparation visibility. The verification CI uses fresh native runners and a fresh Docker configuration with no registry login. Passing on both platforms establishes anonymous reviewer access to the one versioned image. No image rebuild is required for documentation-only changes.
+An explicit `AE_PLATFORM` can select `linux/amd64` or `linux/arm64`. Running a non-native platform can require emulation.
 
-For offline use, verify and load the single export as documented in README.md. The image inventory records the platforms actually exported. The complete reviewer workflow uses one container; no Docker service dependencies are introduced.
+## Versioned publication and verification
 
-References:
+For every image version intended for reviewers:
+
+1. Freeze the scientific source and documented configuration.
+2. Build AMD64 and ARM64 on native runners.
+3. Run unit/integration tests, offline quickstart, preservation checks and metric comparisons on both.
+4. Verify OCI source, revision, version and source-fingerprint labels.
+5. Publish the two tested platform images and assemble one multi-platform index.
+6. Refuse to overwrite an existing version tag with conflicting platform digests.
+7. Pull the published index anonymously on fresh native runners and repeat the reviewer workflow.
+8. Export the multi-platform image, record the actual index/export digests and test a clean offline load.
+9. Regenerate the distribution inventory and archive integrity evidence.
+
+Historical CI success is evidence only for the source and image versions actually tested. Documentation-only edits generally do not require a new image if the runtime source fingerprint and image contents remain identical. Scientific source or runtime configuration changes do require renewed matching validation.
+
+Useful references:
 
 - https://docs.docker.com/build/building/multi-platform/
 - https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry
@@ -49,14 +57,24 @@ References:
 
 ## Offline image-store compatibility
 
-The one exported archive contains an OCI index with both native CPU variants. Use Docker 29+ with the containerd image store for this offline multi-platform delivery. Current Docker Desktop and fresh Docker Engine 29+ installs enable it by default. Older upgraded Engine installations can retain the classic store, which cannot load a multi-platform index.
+The complete distribution includes one exported image with both native CPU variants. Loading this multi-platform export requires Docker Engine 29 or newer with the containerd image store enabled, including a compatible Docker Desktop installation.
 
-Check the store before loading:
+Check the active image store:
 
 ```bash
 docker info -f '{{ .DriverStatus }}'
 ```
 
-The output should identify `io.containerd.snapshotter.v1`. On Docker Desktop, enable **Use containerd for pulling and storing images** in Settings → General if needed. For Docker Engine, follow the [official containerd-store instructions](https://docs.docker.com/engine/storage/containerd/); preserve existing daemon configuration when merging `features.containerd-snapshotter: true`. A store switch temporarily hides the other store's images/containers until switched back; do not overwrite unrelated daemon settings. The launcher does not change the user's daemon.
+The output should include `io.containerd.snapshotter.v1`. On Docker Desktop, enable **Use containerd for pulling and storing images** in Settings > General if needed. For Docker Engine, follow the [containerd image-store documentation](https://docs.docker.com/engine/storage/containerd/) and preserve unrelated daemon settings.
 
-Then run the README's `docker load` and local-image quickstart commands. Docker chooses the host-compatible variant. The classic store may still run the normal registry-pull route because the registry supplies one selected platform; that is distinct from loading this dual-platform archive. No second image or supporting container is required.
+Switching image stores can temporarily hide images and containers from the other store. The launcher does not modify the user's Docker daemon.
+
+For a complete archive whose image has been validated:
+
+```bash
+python3 release_tools/verify_distribution.py
+docker load -i docker/mlirbench-ae-v0.3.0rc5-image.tar
+AE_IMAGE_SOURCE=local AE_IMAGE=ghcr.io/msspranavasai/mlirbench-ae:0.3.0rc5 ./ae.sh quickstart
+```
+
+Use the actual final release's image name and version if different. Loading the archive should not require a registry pull, and the evaluator workflow should still run one container.
