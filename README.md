@@ -14,7 +14,7 @@ This version is intended to remain a stable, versioned reference to the submitte
 
 MLIRBench evaluates compiler and hardware-aware reasoning on MLIR Linalg and Torch program pairs. This artifact bundles 1,768 published pairs, 15,912 reasoning records for nine models, archived execution/judge observations, tests, metric computation and both compiler toolchains. See the [accepted paper](https://arxiv.org/abs/2611.14881).
 
-Prerequisites: Docker Engine/Desktop 29+ and Python 3.10+ on the host. The offline dual-platform export requires the containerd image store (the default in current Docker Desktop and fresh Docker Engine 29+ installs); see [offline Docker compatibility](docs/container-publication.md#offline-image-store-compatibility). Native Linux AMD64 and ARM64 image variants are verified; macOS uses Docker Desktop. Allow at least 20 GB free space for extraction, image loading and generated results, more for full experiments.
+Prerequisites: Docker Engine 29+ with the containerd image store enabled, including a compatible Docker Desktop installation that bundles Docker Engine 29 or newer, and Python 3.10+ on the host. The offline multi-platform image export requires the containerd image store; see [offline Docker compatibility](docs/container-publication.md#offline-image-store-compatibility). Native Linux AMD64 and ARM64 image variants are verified; macOS uses Docker Desktop. Allow at least 20 GB free space for extraction, image loading and generated results, more for full experiments.
 
 ```bash
 git clone --branch v0.3.0rc5 https://github.com/msspranavasai/MLIRBench-CGO2027-AE.git
