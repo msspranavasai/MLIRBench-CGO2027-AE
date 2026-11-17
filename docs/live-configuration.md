@@ -10,7 +10,7 @@ The required AE route uses archived responses and needs none of these settings. 
 
 | Stage | Provider/model sent | Required variable | Selection or override |
 |---|---|---|---|
-| Mutation | OpenAI `gpt-5-mini` | `OPENAI_API_KEY` | `MLIRBENCH_MUTATION_MODEL` (exact OpenAI model ID) |
+| Mutation | OpenAI `gpt-5.5` | `OPENAI_API_KEY` | `MLIRBENCH_MUTATION_MODEL` (exact OpenAI model ID) |
 | Reasoning | Selected registry entry below | Variable in registry table | `--model MODEL_KEY` |
 | Judge | OpenAI `gpt-5.4-mini` | `OPENAI_API_KEY` | `OPENAI_MODEL` (exact OpenAI model ID) |
 
