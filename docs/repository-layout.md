@@ -1,27 +1,33 @@
 # Repository layout
 
-This dedicated CGO AE repository preserves the original scientific paths. See [STRUCTURE.md](../STRUCTURE.md) for the final source and complete-archive layout.
+The MLIRBench CGO 2027 AE repository organizes published scientific inputs, offline reproducibility tools, optional live agents and release verification resources. See [STRUCTURE.md](../STRUCTURE.md) for the complete source and archive layout.
 
 | Location | Purpose |
 |---|---|
-| src/mlirbench/pipeline.py | Ordered stage replay/fresh orchestration and score arithmetic |
-| src/mlirbench/stage_artifacts.py | Checkpoint hashes, parent validation and resume |
-| src/mlirbench/dataset.py | Local-first data resolution and consented pinned downloads |
-| src/mlirbench/live.py | Lazy adapters to the original model agents |
-| src/mlirbench/execution/ | Real compiler/runtime, input domains and historical diagnostics |
-| src/mlirbench/evaluation/ | Independent score aggregation and downstream metrics |
-| optional/live_pipeline/agents/ | Original mutation, execution, reasoning and judge implementations |
-| data/ | Frozen scientific inputs, prediction/score observations and provenance |
-| experiments/ | Independent manuscript expectations, numerical policy and claim map |
-| tests/ | Boundary, consent, scoring and actual execution tests |
-| requirements/ | Core toolchain and live-agent dependency pins |
-| docs/ | Current instructions and scientific limitations |
-| paper/reference/ | Accepted manuscript and source identification |
+| `src/mlirbench/pipeline.py` | Archived replay and fresh-stage orchestration |
+| `src/mlirbench/stage_artifacts.py` | Checkpoint hashes, parent validation and resume |
+| `src/mlirbench/dataset.py` | Local-first data resolution and consented downloads |
+| `src/mlirbench/live.py` | Lazy adapters to optional live-model agents |
+| `src/mlirbench/execution/` | Compiler/runtime validation, input domains and diagnostics |
+| `src/mlirbench/evaluation/` | Score aggregation and downstream metrics |
+| `optional/live_pipeline/agents/` | Mutation, execution, reasoning and judge implementations |
+| `data/` | Published scientific inputs, archived observations and provenance |
+| `experiments/` | Manuscript expectations, numerical policy and claim map |
+| `tests/` | Boundary, consent, scoring and execution tests |
+| `requirements/` | Runtime, compiler and optional agent dependencies |
+| `docs/` | Evaluator instructions and scientific limitations |
+| `paper/reference/` | Accepted manuscript and reference materials |
+| `release/` | Source mapping, historical and final checksums, external assets |
+| `release_tools/` | Packaging and distribution integrity utilities |
 
-The Docker image includes both offline and optional live agent code. No model client is initialized during archived replay. Expected paper values are loaded only after metrics are calculated.
+The Docker image contains offline evaluation and optional live-agent code. Archived replay does not initialize model clients. Expected paper values are loaded only after metric computation.
 
-Old runs, build logs, preparation evidence and legacy documentation were moved outside the repository into MLIRBench-AE-history. HISTORY.md records their location. New reviewer artifacts go to MLIRBench-AE-runs by default. Scientific input records remain under data; these include necessary original outputs and validation evidence, not disposable console logs.
+The intended live-agent models are GPT-5.5 for Mutation, `gemini-2.5-flash` for Execution, nine reasoning models and `gpt-5.4-mini` for Judge. Exact provider identifiers and runtime behavior must be checked against the final implementation. CPU compiler execution alone does not prove a Gemini API call.
 
-`experiments/release_invariants.json` records pre-hardening hashes of frozen scientific inputs and recalculated archived outputs. `src/mlirbench/preservation.py` checks them after quickstart; mismatches fail the workflow. It never supplies metric values to the scorer. New live outputs are independent and are not required to match archived output hashes. A preservation PASS does not establish the correctness of historical labels or unresolved paper claims.
+The published benchmark has 24 Linalg and 22 Torch mutation rules. The optional Linalg catalog excludes unused `L2_R2`; historical references in scientific evidence remain preserved.
 
-`tools/release/` retains the original publication tools for provenance. This repository’s CI only verifies anonymous pulls and execution on native AMD64/ARM64, plus macOS launcher compatibility. It does not republish the frozen image.
+New reviewer results go to `../MLIRBench-AE-runs/` by default. Published input records remain under `data/`; they are not disposable logs.
+
+`experiments/release_invariants.json` records baseline identities for frozen inputs and archived results. `src/mlirbench/preservation.py` checks these invariants during quickstart. A preservation PASS means the specified comparisons passed; it does not prove the correctness of all historical labels.
+
+The repository's CI and publication workflows must be interpreted per version. A previously tested image does not validate a modified runtime source. Any corrected image must have matching source fingerprint, versioned image identity, native-platform tests and release evidence.
