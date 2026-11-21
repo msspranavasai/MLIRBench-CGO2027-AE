@@ -1,0 +1,109 @@
+name: Export verified v1.0.0 native image bytes
+
+on:
+  pull_request:
+    paths:
+      - .github/workflows/v1-native-image-export.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  native-image-export:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch: amd64
+            runner: ubuntu-24.04
+            uname_arch: x86_64
+          - arch: arm64
+            runner: ubuntu-24.04-arm
+            uname_arch: aarch64
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 45
+    steps:
+      - name: Check out exact merged release source
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: f506b58f7cff1721c95c453466d71ed2efac80b8
+          persist-credentials: false
+
+      - name: Verify host architecture and preserved source
+        run: |
+          set -euo pipefail
+          test "$(uname -m)" = '${{ matrix.uname_arch }}'
+          test "$(git rev-parse HEAD)" = f506b58f7cff1721c95c453466d71ed2efac80b8
+          python3 -B scripts/check_repo_consistency.py
+          python3 -B release_tools/verify_distribution.py --source-only
+          test "$(python3 -B tools/release/source_identity.py)" = 8d9cd6fb265178e3dab49e4eb75d85b95b82d6bfaacaa366d1410d1b710fcb3b
+          docker info
+
+      - name: Build exact source on native runner, without publishing
+        run: |
+          set -euo pipefail
+          SOURCE_SHA="$(python3 -B tools/release/source_identity.py)"
+          PACKAGE_SHA="$(python3 -B tools/release/package_image_identity.py)"
+          docker build --platform 'linux/${{ matrix.arch }}' \
+            --label "org.mlirbench.source-fingerprint=$SOURCE_SHA" \
+            --label "org.mlirbench.package-metadata-sha256=$PACKAGE_SHA" \
+            --label org.opencontainers.image.revision=f506b58f7cff1721c95c453466d71ed2efac80b8 \
+            --label org.opencontainers.image.version=1.0.0 \
+            --label org.opencontainers.image.source=https://github.com/msspranavasai/MLIRBench-CGO2027-AE \
+            -t ghcr.io/msspranavasai/mlirbench-ae:1.0.0 .
+          python3 -B tools/release/package_image_identity.py \
+            --image ghcr.io/msspranavasai/mlirbench-ae:1.0.0 \
+            --platform 'linux/${{ matrix.arch }}'
+
+      - name: Test exact image twice before export
+        env:
+          AE_IMAGE_SOURCE: local
+          AE_IMAGE: ghcr.io/msspranavasai/mlirbench-ae:1.0.0
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/evidence" "$RUNNER_TEMP/results"
+          AE_OUTPUT_ROOT="$RUNNER_TEMP/results" ./ae.sh quickstart --output /results/first 2>&1 | tee "$RUNNER_TEMP/evidence/first.log"
+          AE_OUTPUT_ROOT="$RUNNER_TEMP/results" ./ae.sh quickstart --output /results/second 2>&1 | tee "$RUNNER_TEMP/evidence/second.log"
+          python3 -B tools/release/collect_evidence.py --arch '${{ matrix.arch }}' \
+            --results "$RUNNER_TEMP/results/first" --output "$RUNNER_TEMP/evidence/native"
+
+      - name: Export, remove local tag, reload and retest offline
+        env:
+          IMAGE: ghcr.io/msspranavasai/mlirbench-ae:1.0.0
+          AE_IMAGE_SOURCE: local
+          AE_IMAGE: ghcr.io/msspranavasai/mlirbench-ae:1.0.0
+        run: |
+          set -euo pipefail
+          docker save --output "$RUNNER_TEMP/v1-native-${{ matrix.arch }}.tar" "$IMAGE"
+          docker image rm "$IMAGE"
+          docker load --input "$RUNNER_TEMP/v1-native-${{ matrix.arch }}.tar"
+          python3 -B tools/release/package_image_identity.py --image "$IMAGE" --platform 'linux/${{ matrix.arch }}'
+          AE_OUTPUT_ROOT="$RUNNER_TEMP/results" ./ae.sh quickstart --output /results/reloaded 2>&1 | tee "$RUNNER_TEMP/evidence/reloaded.log"
+          python3 -B tools/release/collect_evidence.py --arch '${{ matrix.arch }}' \
+            --results "$RUNNER_TEMP/results/reloaded" --output "$RUNNER_TEMP/evidence/reloaded-native"
+          cd "$RUNNER_TEMP"
+          sha256sum "v1-native-${{ matrix.arch }}.tar" > "v1-native-${{ matrix.arch }}.tar.sha256"
+          cat "v1-native-${{ matrix.arch }}.tar.sha256"
+
+      - name: Upload tested native image tar and checksum (not a registry publication)
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: v1-native-image-${{ matrix.arch }}
+          path: |
+            ${{ runner.temp }}/v1-native-${{ matrix.arch }}.tar
+            ${{ runner.temp }}/v1-native-${{ matrix.arch }}.tar.sha256
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 7
+
+      - name: Upload native test evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: v1-export-evidence-${{ matrix.arch }}
+          path: |
+            ${{ runner.temp }}/evidence/
+            ${{ runner.temp }}/results/
+          if-no-files-found: warn
+          retention-days: 30
