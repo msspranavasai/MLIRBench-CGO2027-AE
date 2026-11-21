@@ -34,10 +34,21 @@ def require_identity(expected_sha: str, expected_version: str,
 
 def verify_image(image: str, platform: str, root: Path) -> None:
     expected_sha, version = package_identity(root)
-    template = '{{index .Config.Labels "' + LABEL + '"}}'
-    label = subprocess.check_output(
-        ['docker', 'image', 'inspect', '--platform', platform,
-         '--format', template, image], text=True).strip()
+    # GitHub-hosted Docker versions may not support image inspect --platform.
+    # A legacy inspect is acceptable only when its observed architecture matches.
+    help_text = subprocess.check_output(
+        ['docker', 'image', 'inspect', '--help'], text=True)
+    inspect_args = ['docker', 'image', 'inspect']
+    if '--platform' in help_text:
+        inspect_args.extend(['--platform', platform])
+    inspect_args.extend(['--format', '{{json .}}', image])
+    inspect_result = json.loads(subprocess.check_output(inspect_args, text=True))
+    found_platform = inspect_result['Os'] + '/' + inspect_result['Architecture']
+    if found_platform != platform:
+        raise ValueError(
+            f'Docker image platform mismatch: expected {platform}, found {found_platform}')
+    labels = (inspect_result.get('Config') or {}).get('Labels') or {}
+    label = labels.get(LABEL, '')
     code = (
         'import hashlib,importlib.metadata,json,pathlib;'
         'p=pathlib.Path("/app/pyproject.toml");'
