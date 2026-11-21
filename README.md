@@ -1,6 +1,6 @@
-# MLIRBench: CGO 2027 Artifact Evaluation — v0.3.0rc6
+# MLIRBench: CGO 2027 Artifact Evaluation — v1.0.0 (unpublished preparation)
 
-This local release candidate repairs packaging and optional live-configuration consistency after the [v1 Zenodo release](https://zenodo.org/records/24309675). It has **not been published**. Publication, final anonymous online testing and native AMD64 validation remain separate gates; see `FINAL_VALIDATION_REPORT.md`. No AE badge is claimed.
+This is an **unpublished v1.0.0 source candidate** based on the tested rc6 hardening branch. The complete v1.0.0 archive, checksum sidecar, multi-platform image and public-download evidence have **not** been assembled or validated. Previous rc6 results are historical evidence only; see `FINAL_VALIDATION_REPORT.md` for that earlier candidate. No AE badge is claimed. Do not publish or tag this checkout based on source-only checks.
 
 ## Start here: complete offline distribution
 
@@ -8,19 +8,19 @@ Prerequisites: Docker Engine 29+ with the containerd image store (Docker Desktop
 
 Obtain these **two files together** from the approved release location when published, or use the delivered local candidate:
 
-- `MLIRBench-CGO2027-AE-v0.3.0rc6.tar.gz`
-- `MLIRBench-CGO2027-AE-v0.3.0rc6.tar.gz.sha256`
+- `MLIRBench-CGO2027-AE-v1.0.0.tar.gz`
+- `MLIRBench-CGO2027-AE-v1.0.0.tar.gz.sha256`
 
 ```bash
 # In the directory containing both delivered files (macOS):
-shasum -a 256 -c MLIRBench-CGO2027-AE-v0.3.0rc6.tar.gz.sha256
-# Linux alternative: sha256sum -c MLIRBench-CGO2027-AE-v0.3.0rc6.tar.gz.sha256
+shasum -a 256 -c MLIRBench-CGO2027-AE-v1.0.0.tar.gz.sha256
+# Linux alternative: sha256sum -c MLIRBench-CGO2027-AE-v1.0.0.tar.gz.sha256
 
-tar -xzf MLIRBench-CGO2027-AE-v0.3.0rc6.tar.gz
-cd MLIRBench-CGO2027-AE-v0.3.0rc6
+tar -xzf MLIRBench-CGO2027-AE-v1.0.0.tar.gz
+cd MLIRBench-CGO2027-AE-v1.0.0
 python3 -B release_tools/verify_distribution.py
-docker load -i docker/mlirbench-ae-v0.3.0rc6-image.tar
-AE_IMAGE_SOURCE=local AE_IMAGE=ghcr.io/msspranavasai/mlirbench-ae:0.3.0rc6 ./ae.sh quickstart
+docker load -i docker/mlirbench-ae-v1.0.0-image.tar
+AE_IMAGE_SOURCE=local AE_IMAGE=ghcr.io/msspranavasai/mlirbench-ae:1.0.0 ./ae.sh quickstart
 ```
 
 This is a plain gzip-compressed tar, with exactly the top-level directory shown. Do not rename it to ZIP or add another archive wrapper. The earlier Zenodo upload was a ZIP around an unversioned tar and is not this candidate. The SHA-256 sidecar delivered with this candidate verifies these actual bytes; no claim is made that it was already published on Zenodo.
@@ -31,19 +31,19 @@ Output is written outside the artifact, under `../MLIRBench-AE-runs/quickstart-<
 
 ## Public online route — requires approved publication
 
-The intended immutable image is `ghcr.io/msspranavasai/mlirbench-ae:0.3.0rc6`. It is not asserted to be public yet. After source and image publication are approved and completed, run from the matching versioned source:
+The intended immutable image is `ghcr.io/msspranavasai/mlirbench-ae:1.0.0`. It is not asserted to be public yet. After source and image publication are approved and completed, run from the matching versioned source:
 
 ```bash
 ./ae.sh quickstart
 ```
 
-The launcher pulls the native variant and checks the real runtime source fingerprint. Do not bypass a mismatch. The source and binary use a new rc6 identity; rc5 public bytes/tags are preserved.
+The launcher pulls the native variant and checks the real runtime source fingerprint. Do not bypass a mismatch. The source and binary use a new rc6 identity; rc5 and rc6 public or historical bytes/tags must remain preserved.
 
 ## Scientific scope
 
 Frozen inputs remain 1,768 program pairs (888 Linalg, 880 Torch), 15,912 saved reasoning records from nine models, and 15,907 judged records. The required quickstart verifies inputs, runs the supplied tests, replays all four archived stages, recomputes objective correctness and scores, compares paper tables, replays downstream saved-prediction metrics, checks archived compiler arithmetic and compiles/executes representative Linalg/Torch pairs.
 
-Expected baseline: 214 passing tests, 64 preservation checks, 61 accepted benchmark checks (40 exact; 21 within the unchanged 0.15/100 Table 4 policy), 76 matching downstream comparisons, and successful repeated CPU pair checks. These are expectations, not substitutes for the actual generated reports.
+Historical rc6 engineering evidence: 228 passing tests; the v1.0.0 build must establish its own test count. Preserved scientific expectations include 64 preservation checks, 61 accepted benchmark checks (40 exact; 21 within the unchanged 0.15/100 Table 4 policy), 76 matching downstream comparisons, and successful repeated CPU pair checks. These are expectations, not substitutes for the actual generated reports.
 
 Archived replay is not new LLM inference. Fresh CPU equality covers the tested shared-input suite, not universal semantic equivalence. Historical input provenance, semantic-label conflicts, GPU training/inference and the explicitly excluded judging ablation remain documented limitations.
 
@@ -51,7 +51,7 @@ The corrected optional catalog excludes unused Linalg `L2_R2`; frozen records re
 
 ## Contents and verification
 
-The complete archive includes source, scientific bundles, the actual two-platform image, 914 verified Nova asset entries including 11 adapter models, and historical label/native CI evidence. Historical rc5 evidence is explicitly historical and does not validate rc6. Current candidate evidence is kept under `evidence/rc6/`.
+The complete archive includes source, scientific bundles, the actual two-platform image, 914 verified Nova asset entries including 11 adapter models, and historical label/native CI evidence. Historical rc5/rc6 evidence is explicitly historical and does not validate v1.0.0. Historical candidate evidence is kept under `evidence/rc6/`; new v1.0.0 evidence must be captured separately.
 
 `MANIFEST.sha256` covers every regular file except itself, including the image. `release/scientific-reference.sha256` pins protected scientific source/data; `release/scientific-files.sha256` covers distributed source implementation. `docker/image-inventory.json` records actual image identities. No `.git`, caches, AppleDouble metadata, virtual environments or credential files belong in the package.
 

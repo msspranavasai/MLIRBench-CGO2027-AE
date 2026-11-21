@@ -1,7 +1,7 @@
-# Canonical rc6 artifact download
+# Canonical v1.0.0 artifact download (planned, not published)
 
-This local candidate is not yet published. Obtain `MLIRBench-CGO2027-AE-v0.3.0rc6.tar.gz` and its `.sha256` sidecar together from the approved release location after publication. Until then, use the delivered local files. Do not treat GitHub's automatic source ZIP as the complete offline artifact: it omits large supplemental resources and the exported image.
+The complete v1.0.0 distribution has **not** been produced or published. The intended files are `MLIRBench-CGO2027-AE-v1.0.0.tar.gz` and `MLIRBench-CGO2027-AE-v1.0.0.tar.gz.sha256`. Do not download an automatic GitHub source ZIP and mistake it for the complete offline artifact: it omits large supplemental resources and the exported multi-platform image.
 
-The canonical download is a plain `.tar.gz`, with the root `MLIRBench-CGO2027-AE-v0.3.0rc6/`. Run the exact checksum, extraction, verification and local-image commands in [README.md](README.md). If GitHub's per-file transport limit requires splitting, publish parts plus part hashes and explicit reconstruction instructions only after producing them; no rc6 parts are claimed here. The Zenodo deposit should receive the intact canonical archive and its actual SHA-256 sidecar.
+After final packaging and approval, the archive must be a plain `.tar.gz` containing exactly one root `MLIRBench-CGO2027-AE-v1.0.0/`. Check its actual SHA-256 before extraction, run `release_tools/verify_distribution.py` on the extracted full distribution, load the included image, and execute the documented local reviewer quickstart on supported native CPUs.
 
-The old rc5 upload has a different ZIP/tar/root layout and must not be silently renamed or replaced. This candidate is a separately versioned repair with unchanged scientific reference data.
+The original rc5 public upload and rc6 development evidence retain their historical names and hashes. Do not overwrite them, rename their bytes to v1.0.0, or publish the planned paths as though they already exist. The full offline reviewer download is a separate publication gate.

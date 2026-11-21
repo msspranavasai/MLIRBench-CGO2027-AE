@@ -1,4 +1,4 @@
-# rc6 release repair. The rc5 binary toolchain is an immutable, two-platform base.
+# v1.0.0 candidate. The rc5 binary toolchain remains an immutable two-platform base.
 # docker/Dockerfile.rc5 preserves its original dependency-building recipe.
 FROM ghcr.io/msspranavasai/mlirbench-ae@sha256:9238290317c4e6a0b70cd20781fc30169efa87c6fcbc663debdcccd3275eeec8
 ARG TARGETARCH
@@ -15,7 +15,7 @@ COPY docs /app/docs
 # Source installation has no dependency resolution and no network access.
 RUN --network=none cd /tmp && PYTHONPATH= python -m pip uninstall --yes mlirbench && \
     PYTHONPATH= python -m pip install --no-cache-dir --no-deps --no-build-isolation /app && \
-    python -I -c "import importlib.metadata as m,mlirbench; assert m.version('mlirbench') == mlirbench.__version__ == '0.3.0rc6'; assert len(list(m.distributions(name='mlirbench'))) == 1" && \
+    python -I -c "import importlib.metadata as m,mlirbench; assert m.version('mlirbench') == mlirbench.__version__ == '1.0.0'; assert len(list(m.distributions(name='mlirbench'))) == 1" && \
     command -v mlir-opt && command -v torch-mlir-opt && command -v iree-compile && \
     python -c "import iree.compiler,iree.runtime,numpy" && test ! -f /app/.env
 ENTRYPOINT ["python", "-m", "mlirbench"]

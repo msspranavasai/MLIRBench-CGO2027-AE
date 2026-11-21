@@ -1,7 +1,7 @@
 {
-  "title": "MLIRBench: CGO 2027 Artifact Evaluation Release (v0.3.0rc6)",
+  "title": "MLIRBench: CGO 2027 Artifact Evaluation Release (v1.0.0)",
   "resource_type": "software",
-  "version": "0.3.0rc6",
+  "version": "1.0.0",
   "creators": [
     {
       "name": "Maganti, Pranava Sai"
