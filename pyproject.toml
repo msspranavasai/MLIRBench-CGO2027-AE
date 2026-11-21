@@ -7,11 +7,30 @@ name = "mlirbench"
 version = "0.3.0rc6"
 description = "MLIRBench - A Benchmark and Dataset for Compiler and Hardware-Aware Reasoning"
 readme = "README.md"
-requires-python = ">=3.10,<3.13"
+requires-python = ">=3.11,<3.13"
 license = "Apache-2.0"
-dependencies = []
+# These are the actual CPU execution requirements in requirements/core.txt.
+# Environment-specific paper-backend wheels are installed separately.
+dependencies = [
+    "numpy==2.4.6",
+    "iree-compiler==20241104.1068",
+    "iree-runtime==20241104.1068",
+    "torch-mlir==20261101",
+    "sympy==1.14.0",
+    "mpmath==1.3.0",
+    "packaging==26.3",
+]
 
 [project.optional-dependencies]
+live = [
+    "openai==2.41.0",
+    "python-dotenv==1.2.2",
+    "langchain-core==1.4.1",
+    "langchain-openai==1.2.2",
+    "langchain-anthropic==1.4.4",
+    "langchain-google-genai==4.2.4",
+    "langgraph==1.2.4",
+]
 dev = [
     "pytest>=8,<10",
     "ruff>=0.9,<1",
@@ -29,4 +48,4 @@ pythonpath = ["src", "."]
 
 [tool.ruff]
 line-length = 100
-target-version = "py310"
+target-version = "py311"
