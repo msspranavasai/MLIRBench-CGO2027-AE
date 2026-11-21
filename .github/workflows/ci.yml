@@ -26,12 +26,19 @@ jobs:
       - name: Build this exact source without publishing
         run: |
           ID="$(PYTHONDONTWRITEBYTECODE=1 python3 tools/release/source_identity.py)"
+          PACKAGE_SHA="$(python3 -B tools/release/package_image_identity.py)"
           docker build --platform 'linux/${{ matrix.arch }}' \
             --label "org.mlirbench.source-fingerprint=$ID" \
+            --label "org.mlirbench.package-metadata-sha256=$PACKAGE_SHA" \
             --label "org.opencontainers.image.revision=$GITHUB_SHA" \
             --label org.opencontainers.image.version=0.3.0rc6 \
             --label org.opencontainers.image.source=https://github.com/msspranavasai/MLIRBench-CGO2027-AE \
             -t ghcr.io/msspranavasai/mlirbench-ae:0.3.0rc6 .
+      - name: Verify package metadata actually installed in image
+        run: |
+          python3 -B tools/release/package_image_identity.py \
+            --image ghcr.io/msspranavasai/mlirbench-ae:0.3.0rc6 \
+            --platform 'linux/${{ matrix.arch }}'
       - name: Run native local-image quickstart twice
         env:
           AE_IMAGE_SOURCE: local

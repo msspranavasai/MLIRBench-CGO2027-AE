@@ -37,7 +37,7 @@ dev = [
 ]
 
 [project.scripts]
-mlirbench = "mlirbench.cli:main"
+mlirbench = "mlirbench.wheel_cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

@@ -88,8 +88,14 @@ case "$AE_IMAGE_SOURCE" in
   build)
     python3 "$AE_ROOT/run.py" fetch-data --build-inputs
     AE_SOURCE_ID="$(python3 "$AE_ROOT/tools/release/source_identity.py")"
+    AE_PACKAGE_LABEL=()
+    if [[ -f "$AE_ROOT/pyproject.toml" ]]; then
+      AE_PACKAGE_SHA="$(python3 "$AE_ROOT/tools/release/package_image_identity.py")"
+      AE_PACKAGE_LABEL=(--label "org.mlirbench.package-metadata-sha256=$AE_PACKAGE_SHA")
+    fi
     docker build --platform "$AE_PLATFORM" \
-      --label "org.mlirbench.source-fingerprint=$AE_SOURCE_ID" -t "$AE_IMAGE" . ;;
+      --label "org.mlirbench.source-fingerprint=$AE_SOURCE_ID" \
+      "${AE_PACKAGE_LABEL[@]}" -t "$AE_IMAGE" . ;;
   local)
     if ! docker image inspect ${AE_INSPECT_PLATFORM[@]+"${AE_INSPECT_PLATFORM[@]}"} "$AE_IMAGE" >/dev/null 2>&1; then
       echo "Local mode requires an existing image for $AE_PLATFORM: $AE_IMAGE. Use AE_IMAGE_SOURCE=build or pull." >&2
