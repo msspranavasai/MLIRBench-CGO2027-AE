@@ -2,7 +2,7 @@
 
 ## Default: no paid model calls
 
-Use the complete rc6 archive and the checksum/load/local-mode commands in [README.md](README.md). Docker Engine 29+ with containerd storage, host Python 3.10+ and 20 GB free disk are recommended. The candidate is not published; the default online command below requires later approved publication and actual anonymous validation. Existing scientific scope and numerical policies are unchanged. The root Dockerfile layers the corrected source over the immutable original toolchain.
+Once it has been assembled and validated, use the complete v1.0.0 archive and the checksum/load/local-mode commands in [README.md](README.md). Docker Engine 29+ with containerd storage, host Python 3.10+ and 20 GB free disk are recommended. The candidate is not published; the default online command below requires later approved publication and actual anonymous validation. Existing scientific scope and numerical policies are unchanged. The root Dockerfile layers the corrected source over the immutable original toolchain.
 
 ```bash
 ./ae.sh quickstart
@@ -148,7 +148,7 @@ AE_PLATFORM=linux/arm64 ./ae.sh quickstart
 
 Selecting the opposite architecture uses emulation. The versioned publication workflow requires native ARM64 and AMD64 build-and-test runs, followed by fresh pulls and complete reviewer runs on both architectures. Per-version CI evidence identifies the tested source and image configurations. Both variants retain the same compiler/runtime pins and semantic compiler flags. CPU semantic checks are not performance benchmarks.
 
-The distribution uses one registry reference, `ghcr.io/msspranavasai/mlirbench-ae:0.3.0rc6`. The intended registry index contains both platform variants; final native validation status is recorded separately, and historical rc5 tests do not establish rc6 success. Reviewers run the same command on both CPU types; they do not select separate agent images or start supporting services. See [container publication](docs/container-publication.md).
+The distribution uses one registry reference, `ghcr.io/msspranavasai/mlirbench-ae:1.0.0`. The intended registry index contains both platform variants; final native validation status is recorded separately, and historical rc5/rc6 tests do not establish v1.0.0 success. Reviewers run the same command on both CPU types; they do not select separate agent images or start supporting services. See [container publication](docs/container-publication.md).
 
 ## Additional checks
 
@@ -167,9 +167,9 @@ The sole root Dockerfile packages the four-stage evaluation workflow, both diale
 
 After approved publication, the default launcher pulls the versioned reference. Both pull and local modes verify that the selected image source fingerprint matches the checkout. After a catalog or live-model configuration change, regenerate the fingerprint and rebuild the image; do not rely on a previously published image whose source differs. Use AE_IMAGE to pin the published index digest when an immutable binary reference is desired. Version publication refuses to replace an existing tag with different platform digests. The default does not require manually loading architecture-specific tar files.
 
-The restored rc5 CI evidence is historical only. The rc6 image is a separately built local candidate; native AMD64 and public online execution remain NOT TESTED until actually performed. See [the publication guide](docs/container-publication.md) for the public-download check.
+The restored rc5/rc6 CI evidence is historical for v1.0.0. Native v1.0.0 execution and public online testing remain NOT TESTED until actually performed. See [the publication guide](docs/container-publication.md) for the public-download check.
 
-The complete distribution includes `docker/mlirbench-ae-v0.3.0rc6-image.tar`. Follow README.md to verify and load it, then select `AE_IMAGE_SOURCE=local` with the documented rc5 tag. Local mode prevents registry access and now enforces the same source-fingerprint guard; the inventory identifies included architectures.
+The planned complete distribution will include `docker/mlirbench-ae-v1.0.0-image.tar` after both native variants are built and exported. Follow README.md to verify and load it, then select `AE_IMAGE_SOURCE=local` with the matching v1.0.0 image tag. Local mode prevents registry access and now enforces the same source-fingerprint guard; the inventory identifies included architectures.
 
 Quickstart also writes `preservation.json`, comparing newly recalculated archived results and frozen inputs against the pre-hardening baseline. This check fails on changed numbers or records, without changing expected paper values, tolerances, labels or scoring rules. For a completed full quickstart run, repeat it with `./ae.sh verify-preservation --results /results/<run-folder>`. Scientific provenance and fresh experimental outcomes remain separate evidence.
 

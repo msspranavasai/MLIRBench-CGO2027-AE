@@ -1,4 +1,4 @@
-name: Verify rc6 candidate on native CPUs
+name: Verify v1.0.0 candidate on native CPUs
 on:
   pull_request:
   workflow_dispatch:
@@ -31,18 +31,18 @@ jobs:
             --label "org.mlirbench.source-fingerprint=$ID" \
             --label "org.mlirbench.package-metadata-sha256=$PACKAGE_SHA" \
             --label "org.opencontainers.image.revision=$GITHUB_SHA" \
-            --label org.opencontainers.image.version=0.3.0rc6 \
+            --label org.opencontainers.image.version=1.0.0 \
             --label org.opencontainers.image.source=https://github.com/msspranavasai/MLIRBench-CGO2027-AE \
-            -t ghcr.io/msspranavasai/mlirbench-ae:0.3.0rc6 .
+            -t ghcr.io/msspranavasai/mlirbench-ae:1.0.0 .
       - name: Verify package metadata actually installed in image
         run: |
           python3 -B tools/release/package_image_identity.py \
-            --image ghcr.io/msspranavasai/mlirbench-ae:0.3.0rc6 \
+            --image ghcr.io/msspranavasai/mlirbench-ae:1.0.0 \
             --platform 'linux/${{ matrix.arch }}'
       - name: Run native local-image quickstart twice
         env:
           AE_IMAGE_SOURCE: local
-          AE_IMAGE: ghcr.io/msspranavasai/mlirbench-ae:0.3.0rc6
+          AE_IMAGE: ghcr.io/msspranavasai/mlirbench-ae:1.0.0
         run: |
           set -o pipefail
           mkdir -p "$RUNNER_TEMP/evidence"
@@ -52,9 +52,9 @@ jobs:
             --results "$RUNNER_TEMP/results/first" --output "$RUNNER_TEMP/evidence/native"
       - name: Export, remove only task-owned reference, load and run offline
         env:
-          IMAGE: ghcr.io/msspranavasai/mlirbench-ae:0.3.0rc6
+          IMAGE: ghcr.io/msspranavasai/mlirbench-ae:1.0.0
           AE_IMAGE_SOURCE: local
-          AE_IMAGE: ghcr.io/msspranavasai/mlirbench-ae:0.3.0rc6
+          AE_IMAGE: ghcr.io/msspranavasai/mlirbench-ae:1.0.0
         run: |
           set -o pipefail
           docker save -o "$RUNNER_TEMP/candidate-image.tar" "$IMAGE"
@@ -67,7 +67,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: rc6-native-${{ matrix.arch }}
+          name: v1-native-${{ matrix.arch }}
           path: |
             ${{ runner.temp }}/evidence/
             ${{ runner.temp }}/results/
